@@ -22,7 +22,7 @@ if st.button("Pesquisar"):
         with st.spinner("Pesquisando produtos..."):
             # Executa o script de coleta
             resultado = subprocess.run(
-                ["python.exe", "coletarDados.py", produto_pesquisa],
+                ["python", "coletarDados.py", produto_pesquisa],
                 capture_output=True,
                 text=True
             )

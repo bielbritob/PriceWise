@@ -9,7 +9,7 @@ def extrair_produtos(produto):
         print(f"Acessando a URL: {url}")  # Log para depuração
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(headless=False)
             page = browser.new_page()
             page.goto(url)
             page.wait_for_selector("a[title]")
