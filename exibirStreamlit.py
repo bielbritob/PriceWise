@@ -1,48 +1,33 @@
 import streamlit as st
+import pandas as pd
 import json
 import subprocess
 
+def find_lowest_price(product):
+    #Call the data scraping script
+    subprocess.call(['python', 'coletarDados.py', product])
 
-def carregar_dados_json(arquivo="dados_produtos.json"):
-    try:
-        with open(arquivo, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
+    #load JSON file with scraped data
+    with open('product_data.json') as json_file:
+        data = json.load(json_file)
 
+    #convert JSON to DataFrame
+    df = pd.DataFrame(data)
 
-# Interface do Streamlit
-st.title("Comparador de Preços")
+    #replace ',' with '.' and remove "R$" from values
+    df["Preco"] = df["Preco"].replace({'R\$': '', ',': '.'}, regex=True).astype(float)
 
-# Entrada do usuário
-produto_pesquisa = st.text_input("Digite o produto que deseja pesquisar:")
+    #return the row having minimum value of "Preço"
+    return df.loc[df["Preco"].idxmin()]
 
-if st.button("Pesquisar"):
-    if produto_pesquisa:
-        with st.spinner("Pesquisando produtos..."):
-            # Executa o script de coleta
-            resultado = subprocess.run(
-                ["python.exe", "coletarDados.py", produto_pesquisa],
-                capture_output=True,
-                text=True
-            )
+def main():
+    st.title('Market price comparison')
+    product_name = st.text_input("Enter the product name:", "Type Here ...")
 
-        # Exibe logs do script de coleta
-        st.subheader("Logs do Script de Coleta")
-        st.text("Saída (stdout):")
-        st.text(resultado.stdout)
-        st.text("Erros (stderr):")
-        st.text(resultado.stderr)
+    if st.button('Find Lowest Price'):
+        result = find_lowest_price(product_name)
+        st.write(f"The market '{result['Mercado']}' has the lowest price for this product: R$  {result['Preco']}")
+        st.image(result['Img'], width=200,caption=result['Titulo'])
 
-        if resultado.returncode == 0:  # Verifica se o script foi executado com sucesso
-            dados = carregar_dados_json()
-            if dados:
-                st.subheader(f"Resultados para: {produto_pesquisa}")
-                for item in dados:
-                    st.write(f"**Título:** {item['Título']} | **Preço:** {item['Preço']}")
-            else:
-                st.warning("Nenhum dado encontrado.")
-        else:
-            st.error("Erro ao coletar dados. Verifique os logs acima.")
-    else:
-        st.warning("Por favor, digite um produto para pesquisar.")
+if __name__ == "__main__":
+    main()

@@ -38,15 +38,15 @@ async def search_ig():
     print(selectb)
     await selectb.mouse_click()
 
-    await page.wait(2)
+    #await page.wait(2)
 
     # Select pvh
     cities = await page.query_selector_all("option[class]")
     pvh = cities[7]
     print(cities[7])
-    await page.sleep(1)
+    #await page.sleep(1)
     await pvh.select_option()
-    await page.sleep(1)
+    #await page.sleep(1)
     await selectb.mouse_click()
     print("Porto Velho Selected!")
 
@@ -79,13 +79,18 @@ async def search_ig():
 
         # Extrai a img src
         img_src = soup.find('img')['src']
+
+        # Extrai o link do produto
+        link = soup.find('a', title=True).get('href')
+        link = f"https://www.irmaosgoncalves.com.br{link}"
+        print(f"LINKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK: {link}")
         # log
 
         print(f"  Nome: {nome}")
         print(f"  Preço: {preco}")
         print(f"  Imagem: {img_src}")
         print("-" * 40)
-        dados_produtos.append({"Mercado": "Irmãos Gonçalves", "Título": nome, "Preço": preco, "Img": img_src})
+        dados_produtos.append({"Mercado": "Irmaos Goncalves", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
 
     print("Dados do IG coletado!")
     browser.stop()
@@ -115,12 +120,17 @@ async def search_meta21():
         # Extrai a img src
         img_src = soup.find('img')['src']
 
+        # Extrai o link do produto
+        link = soup.find('a', class_='ib-flex is-direction-column is-align-start is-justify-start is-gap-1 is-wrap-nowrap _item-cell-anchor_t82s5_9')['href']
+        link = f"https://supermercadometa21.instabuy.com.br{link}"
+        print(link)
+
         # log
         print(f"  Nome: {nome}")
         print(f"  Preço: {preco}")
         print(f"  Imagem: {img_src}")
         print("-" * 40)
-        dados_produtos.append({"Mercado": "Meta21", "Título": nome, "Preço": preco, "Img": img_src})
+        dados_produtos.append({"Mercado": "Meta21", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
     print("Dados do Meta21 coletado!")
     browser.stop()
 
@@ -128,31 +138,32 @@ async def search_novaera():
     browser = await uc.start()
     page = await browser.get(urls["novaera"])  # senao ele apenas pesquisa novaera
 
-    await browser.wait(4)
+    #await browser.wait(2)
     print('procurando botao escolha')
 
+    await page.wait_for('select[class="mercantilnovaera-appexample-0-x-buttonSelector"]')
     selecrbutton = await page.query_selector('select[class="mercantilnovaera-appexample-0-x-buttonSelector"]')
     print(selecrbutton)
     await selecrbutton.mouse_click()
     print('pos0')
     await page.select('select.mercantilnovaera-appexample-0-x-buttonSelector')
-    await browser.wait(1)
+    #await browser.wait(1)
     print('pos1')
 
     await selecrbutton.send_keys(text="p")
     pvh = await page.query_selector('option[value="Porto_Velho"]')
 
     print('pvh selecionado')
-    await browser.wait(2)
+    #await browser.wait(2)
     enviar = await page.find('Enviar', best_match=True)
     await enviar.mouse_click()
-    await browser.wait(4)
-
+    #await browser.wait(4)
+    await page.wait_for('div[class="mercantilnovaera-appexample-0-x-botaoSegundoModal"]')
     aceitar = await page.find("Confirmar", best_match=True)
     await aceitar.mouse_click()
     print('Enviado PVH...')
 
-    await browser.wait(2)
+    #await browser.wait(2)
 
     await page.wait_for("span.vtex-product-price-1-x-currencyFraction.vtex-product-price-1-x-currencyFraction--summary",
                         timeout=4)  # espera os produtos aparecer
@@ -173,6 +184,11 @@ async def search_novaera():
         precoDEC = soup.find('span', class_='vtex-product-price-1-x-currencyFraction').text
         preco = f"R$ {precoINT},{precoDEC}"
 
+        # Extrai o link do produto
+        link = soup.find('a')['href']
+        link = f"https://www.supernovaera.com.br/{link}"
+        print(link)
+
         # Extrai a img src
         img_src = soup.find('img')['src']
 
@@ -181,11 +197,11 @@ async def search_novaera():
         print(f"  Preço: R$ {preco}")
         print(f"  Imagem: {img_src}")
         print("-" * 40)
-        dados_produtos.append({"Mercado": "Nova Era", "Título": nome, "Preço": preco, "Img": img_src})
+        dados_produtos.append({"Mercado": "Nova Era", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
     print("Dados do Novaera coletado!")
     browser.stop()
 
-def salvar_dados_json(dados, arquivo="dados_produtos.json"):
+def salvar_dados_json(dados, arquivo="product_data.json"):
     with open(arquivo, "w", encoding="utf-8") as f:
         json.dump(dados, f, ensure_ascii=False, indent=4)
 
