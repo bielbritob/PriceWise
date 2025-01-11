@@ -1,2 +1,3 @@
 nodriver
 beautifulsoup4
+streamlit-aggrid
