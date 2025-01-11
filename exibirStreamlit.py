@@ -8,7 +8,7 @@ import time
 
 # Verifique se o BeautifulSoup está instalado
 #installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
-installbs4 = subprocess.run(["pip","install", "nodriver"],text=True)
+installbs4 = subprocess.run(["pip","install", "zendriver"],text=True)
 #st.text(installed_packages.stdout)
 #st.text(installbs4)
 
