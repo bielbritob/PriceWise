@@ -97,7 +97,7 @@ async def search_ig():
 
 async def search_meta21():
     # Inicia Navegador...
-    browser = await uc.start(headless=False)
+    browser = await uc.start(headless=False, sandbox=False)
     page = await browser.get(urls['meta21'])
 
     await page.wait_for("div.css-0", timeout=2)  # espera os produtos aparecer
