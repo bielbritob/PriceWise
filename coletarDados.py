@@ -16,11 +16,11 @@ dados_produtos = []
 
 async def main():
     try:
-        await search_ig()
+        #await search_ig()
         print('-' * 40)
         await search_meta21()
         print('-' * 40)
-        await search_novaera()
+        #await search_novaera()
         print('pos novaera')
         return dados_produtos
     except Exception as e:
@@ -28,7 +28,7 @@ async def main():
 
 async def search_ig():
     # Inicia Navegador...
-    browser = await uc.start()
+    browser = await uc.start(headless=True)
     page = await browser.get(urls["ig"])  # abre url ig
 
     # Select button finder
@@ -97,7 +97,7 @@ async def search_ig():
 
 async def search_meta21():
     # Inicia Navegador...
-    browser = await uc.start()
+    browser = await uc.start(headless=False)
     page = await browser.get(urls['meta21'])
 
     await page.wait_for("div.css-0", timeout=2)  # espera os produtos aparecer
@@ -135,7 +135,7 @@ async def search_meta21():
     browser.stop()
 
 async def search_novaera():
-    browser = await uc.start()
+    browser = await uc.start(headless=True)
     page = await browser.get(urls["novaera"])  # senao ele apenas pesquisa novaera
 
     #await browser.wait(2)

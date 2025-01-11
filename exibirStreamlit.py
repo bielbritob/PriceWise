@@ -68,9 +68,15 @@ def display_best_price(data):
 # Carregando e exibindo os dados se o produto for pesquisado
 if st.button('Pesquisar'):
     st.spinner("Pesquisando...")
+    terminou = False
     with st.spinner("Pesquisando..."):
         subprocess.call(['python', 'coletarDados.py', product_name])
-    data = load_data()
+        terminou = True
+    if terminou:
+        data = load_data()
+    else:
+        print("nao terminou")
+
 
     # Exibir o melhor preço
     display_best_price(data)
