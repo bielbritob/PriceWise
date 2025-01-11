@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder
 import subprocess
+import os
 
 # Configuração inicial do Streamlit
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
@@ -65,21 +66,23 @@ def display_best_price(data):
         st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
         st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
 
+# Executa o coletarDados.py
+def run_data_collection(product_name):
+    process = subprocess.run(['python', 'coletarDados.py', product_name])
+    if process.returncode == 0 and os.path.exists("product_data.json"):
+        return True
+    else:
+        st.error("Erro ao coletar dados. Verifique o nome do produto ou tente novamente.")
+        return False
+
 # Carregando e exibindo os dados se o produto for pesquisado
 if st.button('Pesquisar'):
-    st.spinner("Pesquisando...")
-    terminou = False
     with st.spinner("Pesquisando..."):
-        subprocess.call(['python', 'coletarDados.py', product_name])
-        terminou = True
-    if terminou:
-        data = load_data()
-    else:
-        print("nao terminou")
-
-
-    # Exibir o melhor preço
-    display_best_price(data)
-
-    # Exibir todos os produtos encontrados
-    display_products(data)
+        if run_data_collection(product_name):
+            data = load_data()
+            # Exibir o melhor preço
+            display_best_price(data)
+            # Exibir todos os produtos encontrados
+            display_products(data)
+        else:
+            st.error("Não foi possível carregar os dados.")
