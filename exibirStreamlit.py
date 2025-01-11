@@ -88,7 +88,7 @@ def run_data_collection(product_name):
 if st.button('Pesquisar'):
     with st.spinner("Pesquisando..."):
         if run_data_collection(product_name):
-            time.sleep(40)
+            time.sleep(5)
             data = load_data()
             # Exibir o melhor preço
             display_best_price(data)
