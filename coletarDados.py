@@ -1,7 +1,7 @@
 import json
 import sys
 from bs4 import BeautifulSoup
-import nodriver as uc
+import zendrver as uc
 
 # Variável para pesquisa
 produt = sys.argv[1]
