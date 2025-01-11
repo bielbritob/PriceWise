@@ -4,6 +4,7 @@ import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder
 import subprocess
 import os
+import time
 
 # Verifique se o BeautifulSoup está instalado
 #installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
@@ -85,6 +86,7 @@ def run_data_collection(product_name):
 if st.button('Pesquisar'):
     with st.spinner("Pesquisando..."):
         if run_data_collection(product_name):
+            time.sleep(40)
             data = load_data()
             # Exibir o melhor preço
             display_best_price(data)
