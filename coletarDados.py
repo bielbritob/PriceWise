@@ -186,7 +186,7 @@ async def search_novaera():
 
         # Extrai o link do produto
         link = soup.find('a')['href']
-        link = f"https://www.supernovaera.com.br/{link}"
+        link = f"https://www.supernovaera.com.br{link}"
         print(link)
 
         # Extrai a img src
