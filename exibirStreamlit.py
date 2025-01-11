@@ -5,6 +5,12 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 import subprocess
 import os
 
+# Verifique se o BeautifulSoup está instalado
+installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
+installbs4 = subprocess.run(["pip","instal", "beautifulsoup4"], capture_output=True, text=True)
+st.text(installed_packages.stdout)
+st.text(installbs4)
+
 # Configuração inicial do Streamlit
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
 
