@@ -9,8 +9,10 @@ import time
 # Verifique se o BeautifulSoup está instalado
 #installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
 installbs4 = subprocess.run(["pip","install", "zendriver"],text=True)
+subprocess.run(["pip","install", "beautifulsoup4"],text=True)
+subprocess.run(["pip","install", "zendriver"],text=True)
 #st.text(installed_packages.stdout)
-#st.text(installbs4)
+#st.text(installbs4)        
 
 # Configuração inicial do Streamlit
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
@@ -19,8 +21,8 @@ st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
 st.title("🛒 PriceWise - Comparador de Preços")
 product_name = st.text_input("Digite o produto que deseja pesquisar:", placeholder="Ex. leite integral")
 
-# Função para carregar os dados coletados do JSON
-def load_data():
+# Função para carregar os dados coletados do JSON                    
+def load_data():    
     with open("product_data.json", "r") as f:
         try:
             return json.load(f)
