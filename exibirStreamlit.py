@@ -1,28 +1,26 @@
+import time
+
 import streamlit as st
 import json
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder
 import subprocess
 import os
-import time
 
 # Verifique se o BeautifulSoup está instalado
 #installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
-installbs4 = subprocess.run(["pip","install", "zendriver"],text=True)
-subprocess.run(["pip","install", "beautifulsoup4"],text=True)
-subprocess.run(["pip","install", "zendriver"],text=True)
+#installbs4 = subprocess.run(["pip","install", "beautifulsoup4"], capture_output=True, text=True)
 #st.text(installed_packages.stdout)
-#st.text(installbs4)        
-
+#st.text(installbs4)
 # Configuração inicial do Streamlit
-st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
+st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 
 # Título e barra de busca
 st.title("🛒 PriceWise - Comparador de Preços")
-product_name = st.text_input("Digite o produto que deseja pesquisar:", placeholder="Ex. leite integral")
+product_name = st.text_input("Digite o produto que deseja pesquisar:", placeholder="Ex. leite integral, cafe 500g (seja especifico para melhor busca)")
 
-# Função para carregar os dados coletados do JSON                    
-def load_data():    
+# Função para carregar os dados coletados do JSON
+def load_data():
     with open("product_data.json", "r") as f:
         try:
             return json.load(f)
@@ -67,7 +65,7 @@ def display_best_price(data):
     col1, col2 = st.columns([1, 2])
 
     with col1:
-        st.image(cheapest_product["Img"], width=300, )
+        st.image(cheapest_product["Img"], width=200, )
 
     with col2:
         st.markdown(f"### {cheapest_product['Titulo']}")
@@ -75,20 +73,43 @@ def display_best_price(data):
         st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
         st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
 
-# Executa o coletarDados.py
+# Função para executar o coletarDados.py e tratar erros
 def run_data_collection(product_name):
-    process = subprocess.run(['python', 'coletarDados.py', product_name])
+    if not product_name:
+        st.error('Erro. Você digitou algo? 🙃')
+        return False
+
+    # Executa o coletarDados.py
+    process = subprocess.run(
+        ['python', 'coletarDados.py', product_name],
+        capture_output=True,
+        text=True  # Decodifica stdout e stderr automaticamente
+    )
+
+    # Verifica se o processo foi bem-sucedido
     if process.returncode == 0 and os.path.exists("product_data.json"):
         return True
+
+    # Verifica mensagens de erro
+    error_message = process.stderr.lower()
+
+    if 'beautifulsoup4' in error_message:
+        st.warning("Pacote BeautifulSoup4 não encontrado. Instalando...")
+        subprocess.run(['pip', 'install', 'beautifulsoup4'])
+    elif 'nodriver' in error_message:
+        st.warning("Pacote Nodriver não encontrado. Instalando...")
+        subprocess.run(['pip', 'install', 'zendriver'])
     else:
         st.error("Erro ao coletar dados. Verifique o nome do produto ou tente novamente.")
         return False
+
+    return False
 
 # Carregando e exibindo os dados se o produto for pesquisado
 if st.button('Pesquisar'):
     with st.spinner("Pesquisando..."):
         if run_data_collection(product_name):
-            time.sleep(5)
+            time.sleep(10)
             data = load_data()
             # Exibir o melhor preço
             display_best_price(data)

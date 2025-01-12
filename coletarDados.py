@@ -16,12 +16,12 @@ dados_produtos = []
 
 async def main():
     try:
-        #await search_ig()
+        await search_ig()
         print('-' * 40)
         await search_meta21()
         print('-' * 40)
-        #await search_novaera()
-        print('pos novaera')
+        await search_novaera()
+
         return dados_produtos
     except Exception as e:
         print(f"Erro durante a execução: {e}")
@@ -83,9 +83,10 @@ async def search_ig():
         # Extrai o link do produto
         link = soup.find('a', title=True).get('href')
         link = f"https://www.irmaosgoncalves.com.br{link}"
-        print(f"LINKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK: {link}")
-        # log
 
+        # log
+        print("-" * 40)
+        print(f"  Link: {link}")
         print(f"  Nome: {nome}")
         print(f"  Preço: {preco}")
         print(f"  Imagem: {img_src}")
@@ -93,11 +94,11 @@ async def search_ig():
         dados_produtos.append({"Mercado": "Irmaos Goncalves", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
 
     print("Dados do IG coletado!")
-    browser.stop()
+    await browser.stop()
 
 async def search_meta21():
     # Inicia Navegador...
-    browser = await uc.start(headless=True, sandbox=False)
+    browser = await uc.start(headless=True)
     page = await browser.get(urls['meta21'])
 
     await page.wait_for("div.css-0", timeout=2)  # espera os produtos aparecer
@@ -123,16 +124,18 @@ async def search_meta21():
         # Extrai o link do produto
         link = soup.find('a', class_='ib-flex is-direction-column is-align-start is-justify-start is-gap-1 is-wrap-nowrap _item-cell-anchor_t82s5_9')['href']
         link = f"https://supermercadometa21.instabuy.com.br{link}"
-        print(link)
+
 
         # log
+        print("-" * 40)
+        print(f"  Link: {link}")
         print(f"  Nome: {nome}")
         print(f"  Preço: {preco}")
         print(f"  Imagem: {img_src}")
         print("-" * 40)
         dados_produtos.append({"Mercado": "Meta21", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
     print("Dados do Meta21 coletado!")
-    browser.stop()
+    await browser.stop()
 
 async def search_novaera():
     browser = await uc.start(headless=True)
@@ -187,19 +190,20 @@ async def search_novaera():
         # Extrai o link do produto
         link = soup.find('a')['href']
         link = f"https://www.supernovaera.com.br{link}"
-        print(link)
 
         # Extrai a img src
         img_src = soup.find('img')['src']
 
         # log
+        print("-" * 40)
+        print(f"  Link: {link}")
         print(f"  Nome: {nome}")
-        print(f"  Preço: R$ {preco}")
+        print(f"  Preço: {preco}")
         print(f"  Imagem: {img_src}")
         print("-" * 40)
         dados_produtos.append({"Mercado": "Nova Era", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
     print("Dados do Novaera coletado!")
-    browser.stop()
+    await browser.stop()
 
 def salvar_dados_json(dados, arquivo="product_data.json"):
     with open(arquivo, "w", encoding="utf-8") as f:
