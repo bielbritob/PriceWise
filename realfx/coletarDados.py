@@ -2,6 +2,7 @@ import json
 import sys
 from bs4 import BeautifulSoup
 import zendriver as uc
+import random
 
 # Variável para pesquisa
 produt = sys.argv[1]
@@ -13,6 +14,9 @@ urls = {
     "meta21": f"https://supermercadometa21.instabuy.com.br/pesquisar?search={produt.replace(' ', '%20')}",
     "novaera": f"https://www.supernovaera.com.br/{produt.replace(' ', '%20')}?_q={produt.replace(' ', '%20')}&map=ft&order=OrderByPriceASC"
 }
+
+def get_random_user_agent(user_agents):
+    return random.choice(user_agents)
 
 dados_produtos = []
 
@@ -32,21 +36,36 @@ async def main():
     except Exception as e:
         print(f"Erro durante a execução: {e}")
 
+USER_AGENTS = [
+    "Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+    "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
+]
+
 async def search_ig():
-    # Inicia Navegador...
-    browser = await uc.start(headless=False)
+    # --------Inicia Navegador...
+    random_user_agent = get_random_user_agent(USER_AGENTS)
+    browser = await uc.start(headless=True, user_agent=random_user_agent)
     page = await browser.get(urls["ig"])  # abre url ig
 
-    # Select button finder
+
+    # ------Select button finder
+    await page.evaluate(
+    """
+    Object.defineProperty(navigator, 'webdriver', {
+        get: () => undefined,
+    });
+    """)
+
     print("Procurando o botão 'Selecione a cidade'...")
     await page.wait_for("div.relative select", timeout=2)
     selectb = await page.select("div.relative select")
     print(selectb)
     await selectb.mouse_click()
 
-    #await page.wait(2)
-
-    # Select pvh
+    # -----------Select pvh maracutay
     cities = await page.query_selector_all("option[class]")
     pvh = cities[7]
     print(cities[7])
@@ -56,18 +75,24 @@ async def search_ig():
     await selectb.mouse_click()
     print("Porto Velho Selected!")
 
-    # Select Av sete de setembro
+    # --------------- Select Av sete de setembro
     localend = await page.find("AV. SETE DE SETEMBRO, n°")
     print(localend)
+    a = await localend.get_html()
     await localend.click()
-    print("& AV. SETE DE SEPTEMBER my friend...")
+    print("s&lected AV. SETE DE SEPTEMBER my friend...")
 
-    await browser.wait(4)
+    await browser.wait(10)
+    await page.save_screenshot(full_page=True)
+    # ----------------garanty#
+    #await page.wait_for('div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full', timeout=5)
 
+    print(a)
     # Selector dos produtos
     produtos_ig = await page.query_selector_all(
         "div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full")
     print(urls['ig'])
+    print(produtos_ig)
     # Loop para achar attrs dos produtos
     for produto in produtos_ig[:3]:
         # Coleta

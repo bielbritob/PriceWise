@@ -12,11 +12,12 @@ def run_data_collection(product_name):
 
 
 def display_best_price(data):
-    if not data:
+    if not data:  # Check if data is empty
         st.error('Json Vazio')
         return False
     else:
-        cheapest_product = min(data, key=lambda x: str(x["Preco"].replace(",", ".")))
+        # Convert prices to floats for proper comparison
+        cheapest_product = min(data, key=lambda x: float(x["Preco"].replace("R$", "").replace(",", ".")))
 
         st.subheader("💰 Melhor Preço Encontrado:")
         col1, col2 = st.columns([1, 2])
@@ -25,7 +26,8 @@ def display_best_price(data):
             st.image(cheapest_product["Img"], width=200)
 
         with col2:
-            st.markdown(f"### {cheapest_product['Titulo']}")
+            titulo = cheapest_product["Titulo"].encode("utf-8").decode("utf-8")
+            st.markdown(f"### {titulo}")
             st.markdown(f"**Preço:**  {cheapest_product['Preco']}")
             st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
             st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
@@ -40,7 +42,7 @@ def display_products(data):
     for item in data:
         products.append({
             "Mercado": item["Mercado"],
-            "Produto": item["Titulo"],
+            "Produto": item["Titulo"].encode("utf-8").decode("utf-8"),  # Ensure "Titulo" is used as-is
             "Preco": item["Preco"],
             "Link": item["Link"]
         })
