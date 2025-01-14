@@ -4,9 +4,9 @@
 
 - improve the scrapScript, add an algorithm that if the product not exist in site the algorithm return that to user. [...]
 
-- improve the product finder(sometimes dont display correctly product(some times the user search 'azeite' and hopes to see smth like 'azeite 180ml vidro' not 'atum em molho de azeite'))
+- improve the product finder(sometimes dont display correctly product(some times the user search 'azeite' and hopes to see smth like 'azeite 180ml vidro' not 'atum em molho de azeite')) [...]
 
-- add market list( add new page, make it separately to search an list of products not only one)
+- add market list( add new page, make it separately to search an list of products not only one) [...]
 
 
   
