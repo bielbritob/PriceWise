@@ -78,53 +78,57 @@ async def search_ig():
     # --------------- Select Av sete de setembro
     localend = await page.find("AV. SETE DE SETEMBRO, n°")
     print(localend)
-    a = await localend.get_html()
     await localend.click()
     print("s&lected AV. SETE DE SEPTEMBER my friend...")
 
-    await browser.wait(10)
-    await page.save_screenshot(full_page=True)
-    # ----------------garanty#
-    #await page.wait_for('div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full', timeout=5)
+    await page.save_screenshot(filename=f"ig.com.br/{produt}.png",full_page=True)
 
-    print(a)
-    # Selector dos produtos
-    produtos_ig = await page.query_selector_all(
-        "div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full")
-    print(urls['ig'])
-    print(produtos_ig)
-    # Loop para achar attrs dos produtos
-    for produto in produtos_ig[:3]:
-        # Coleta
-        html_content = await produto.get_html()
-        print(html_content)  # -> retorna um dicionario com tudo do produto, mas precisa tratar
+    isFound = await page.query_selector('div[class="flex justify-center items-center py-10 text-gray-500 font-semibold"]')
+    print(isFound)
+    if isFound != None:
+        print("NENHUM PRODUTO ACHADO!")
+        dados_produtos.append("NENHUM PRODUTO ACHADO!")
+    else:
+        # ----------------garanty#
+        #await page.wait_for('div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full', timeout=5)
 
-        # trata html
-        soup = BeautifulSoup(html_content, 'html.parser')
+        # Selector dos produtos
+        produtos_ig = await page.query_selector_all(
+            "div.relative.px-4.shadow-md.border.rounded-lg.min-h-max.pb-2.h-full")
+        print(urls['ig'])
+        print(produtos_ig)
+        # Loop para achar attrs dos produtos
+        for produto in produtos_ig[:3]:
+            # Coleta
+            html_content = await produto.get_html()
+            print(html_content)  # -> retorna um dicionario com tudo do produto, mas precisa tratar
 
-        # Extrai o nome do produto
-        nome = soup.find('a', title=True).get('title')
+            # trata html
+            soup = BeautifulSoup(html_content, 'html.parser')
 
-        # Extrai o preço
-        preco = soup.find('div', class_='text-xl text-secondary font-semibold h-7').text.strip()
+            # Extrai o nome do produto
+            nome = soup.find('a', title=True).get('title')
 
-        # Extrai a img src
-        img_src = soup.find('img')['src']
+            # Extrai o preço
+            preco = soup.find('div', class_='text-xl text-secondary font-semibold h-7').text.strip()
 
-        # Extrai o link do produto
-        link = soup.find('a', title=True).get('href')
-        link = f"https://www.irmaosgoncalves.com.br{link}"
+            # Extrai a img src
+            img_src = soup.find('img')['src']
 
-        # log
-        print("-" * 40)
-        print(f"  Link: {link}")
-        print(f"  Nome: {nome}")
-        print(f"  Preço: {preco}")
-        print(f"  Imagem: {img_src}")
-        print("-" * 40)
-        dados_produtos.append({"Mercado": "Irmaos Goncalves", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
+            # Extrai o link do produto
+            link = soup.find('a', title=True).get('href')
+            link = f"https://www.irmaosgoncalves.com.br{link}"
 
-    print("Dados do IG coletado!")
+            # log
+            print("-" * 40)
+            print(f"  Link: {link}")
+            print(f"  Nome: {nome}")
+            print(f"  Preço: {preco}")
+            print(f"  Imagem: {img_src}")
+            print("-" * 40)
+            dados_produtos.append({"Mercado": "Irmãos Gonçalves", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
+
+        print("Dados do IG coletado!")
     await browser.stop()
 
 async def search_meta21():

@@ -1,0 +1,427 @@
+{
+    "leite integral:meta21": [
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Leite Integral NILZA 1L",
+            "Preco": "R$ 5,89",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-ce3c92c8a6894a71a1f2cccf24fc19d1.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Leite-Integral-NILZA-1L-1"
+        }
+    ],
+    "leite integral:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Leite Piracanjuba UHT Integral 1l",
+            "Preco": "R$ 5,29",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898215151708/7898215151708_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-piracanjuba-uht-integral-1l-7898215151708"
+        },
+        {
+            "Mercado": "Irmaos Goncalves",
+            "Titulo": "Leite Nilza UHT Integral 1L",
+            "Preco": "R$ 5,48",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898080641328/7898080641328_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-nilza-uht-integral-1l-7898080641328"
+        },
+        {
+            "Mercado": "Irmaos Goncalves",
+            "Titulo": "Leite Italac UHT Integral 1L",
+            "Preco": "R$ 6,20",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898080640611/7898080640611_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-italac-uht-integral-1l-7898080640611"
+        }
+    ],
+    "leite integral:todos": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Leite Piracanjuba UHT Integral 1l",
+            "Preco": "R$ 5,29",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898215151708/7898215151708_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-piracanjuba-uht-integral-1l-7898215151708"
+        },
+        {
+            "Mercado": "Irmaos Goncalves",
+            "Titulo": "Leite Nilza UHT Integral 1L",
+            "Preco": "R$ 5,48",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898080641328/7898080641328_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-nilza-uht-integral-1l-7898080641328"
+        },
+        {
+            "Mercado": "Irmaos Goncalves",
+            "Titulo": "Leite Italac UHT Integral 1L",
+            "Preco": "R$ 6,20",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7898080640611/7898080640611_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/leite-italac-uht-integral-1l-7898080640611"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Leite Integral NILZA 1L",
+            "Preco": "R$ 5,89",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-ce3c92c8a6894a71a1f2cccf24fc19d1.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Leite-Integral-NILZA-1L-1"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite UHT Integral NILZA Com Tampa Caixa 1L ",
+            "Preco": "R$ 5,89",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/204164-300-300?v=638105160512200000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-uht-integral-nilza-com-tampa-caixa-1l/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite em Pó PRIMALATTE Integral pacote 400g ",
+            "Preco": "R$ 15,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/219656-300-300?v=638711900332070000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-em-po-primalatte-integral-pacote-400g-/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite Fermentado Integral Amaranto & Mamão Activia Café da Manhã Pote 170g ",
+            "Preco": "R$ 6,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/170196-300-300?v=637442543844170000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-fermentado-integral-amaranto---mamao-activia-cafe-da-manha-pote-170g/p"
+        }
+    ],
+    "leite integral:nova era": [
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite UHT Integral NILZA Com Tampa Caixa 1L ",
+            "Preco": "R$ 5,89",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/204164-300-300?v=638105160512200000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-uht-integral-nilza-com-tampa-caixa-1l/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite em Pó PRIMALATTE Integral pacote 400g ",
+            "Preco": "R$ 15,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/219656-300-300?v=638711900332070000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-em-po-primalatte-integral-pacote-400g-/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite Pó Piracanjuba Integral Pacote 1kg ",
+            "Preco": "R$ 43,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/192507-300-300?v=637745849723030000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-po-piracanjuba-integral-pacote-1kg/p"
+        }
+    ],
+    "cafe 500g:todos": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Jamari Almofada 500g",
+            "Preco": "R$ 22,10",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800046/7897281800046_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-jamari-almofada-500g-7897281800046"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Katuta Tradicional Almofada 500g",
+            "Preco": "R$ 23,99",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800039/7897281800039_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-katuta-tradicional-almofada-500g-7897281800039"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Katuta Tradicional a Vácuo 500g",
+            "Preco": "R$ 25,10",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800169/7897281800169_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-katuta-tradicional-a-vácuo-500g-7897281800169"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído a Vácuo Extraforte Café Brasileiro Pacote 500g",
+            "Preco": "R$ 19,98",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-f994c11b81314ee7843515f916af498f.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-a-Vacuo-Extraforte-Cafe-Brasileiro-Pacote-500g"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído a Vácuo Tradicional Café Brasileiro Pacote 500g",
+            "Preco": "R$ 19,98",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-6c381e0c54d14c51aae9ab369cdc9788.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-a-Vacuo-Tradicional-Cafe-Brasileiro-Pacote-500g"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído Extraforte Melitta Caixa 500g",
+            "Preco": "R$ 25,99",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-e10c5eed4bfb4280b000829d06cd1497.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-Extraforte-Melitta-Caixa-500g"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Café Torrado e Moído 3 CORAÇÕES Tradicional a Vácou 500g ",
+            "Preco": "R$ 23,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/183201-300-300?v=637629270830800000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/cafe-torrado-e-moido-3-coracoes-tradicional-a-vacou-500g/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Café Tradicional 3 CORAÇÕES a Vacuo Extra Forte 500g ",
+            "Preco": "R$ 23,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/183202-300-300?v=637629271562170000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/cafe-tradicional-3-coracoes-a-vacuo-extra-forte-500g/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Café Torrado e Moído PILÃO Tradicional Pacote 500g ",
+            "Preco": "R$ 25,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/195058-300-300?v=637787991928330000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/cafe-torrado-e-moido-pilao-tradicional-pacote-500g/p"
+        }
+    ],
+    "cafe 500g:meta21": [
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído a Vácuo Extraforte Café Brasileiro Pacote 500g",
+            "Preco": "R$ 19,98",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-f994c11b81314ee7843515f916af498f.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-a-Vacuo-Extraforte-Cafe-Brasileiro-Pacote-500g"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído a Vácuo Tradicional Café Brasileiro Pacote 500g",
+            "Preco": "R$ 19,98",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-6c381e0c54d14c51aae9ab369cdc9788.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-a-Vacuo-Tradicional-Cafe-Brasileiro-Pacote-500g"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Café Torrado e Moído Extraforte Melitta Caixa 500g",
+            "Preco": "R$ 25,99",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-e10c5eed4bfb4280b000829d06cd1497.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Cafe-Torrado-e-Moido-Extraforte-Melitta-Caixa-500g"
+        }
+    ],
+    "cafe 500g:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Jamari Almofada 500g",
+            "Preco": "R$ 22,10",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800046/7897281800046_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-jamari-almofada-500g-7897281800046"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Katuta Tradicional Almofada 500g",
+            "Preco": "R$ 23,99",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800039/7897281800039_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-katuta-tradicional-almofada-500g-7897281800039"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Café Torrado e Moído Katuta Tradicional a Vácuo 500g",
+            "Preco": "R$ 25,10",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897281800169/7897281800169_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/café-torrado-e-moído-katuta-tradicional-a-vácuo-500g-7897281800169"
+        }
+    ],
+    "sabão em pó:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Conc. Tixan Ypê Antibac Caixa 1,6kg",
+            "Preco": "R$ 20,65",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896098903971/7896098903971_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-conc.-tixan-ypê-antibac-caixa-1-6kg-7896098903971"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Conc. Tixan Ypê Antibac Caixa 800g",
+            "Preco": "R$ 8,80",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896098902790/7896098902790_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-conc.-tixan-ypê-antibac-caixa-800g-7896098902790"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Conc. Tixan Ypê Green Caixa 1,6kg",
+            "Preco": "R$ 22,50",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896098909966/7896098909966_99_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-conc.-tixan-ypê-green-caixa-1-6kg-7896098909966"
+        }
+    ],
+    "arroz 5kg:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Arroz Branco Guarani T-2 5kg",
+            "Preco": "R$ 19,98",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897121506732/7897121506732_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/arroz-branco-guarani-t-2-5kg-7897121506732"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Arroz Branco Bernardo TP-1 5kg",
+            "Preco": "R$ 23,65",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896541201012/7896541201012_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/arroz-branco-bernardo-tp-1-5kg-7896541201012"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Arroz Branco Soltinho TP-1 5kg",
+            "Preco": "R$ 23,78",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897121500952/7897121500952_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/arroz-branco-soltinho-tp-1-5kg-7897121500952"
+        }
+    ],
+    "arroz 5kg:todos": [
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Arroz Branco Tipo 1 Tio Urbano Seleção Especial Pacote 5kg",
+            "Preco": "R$ 31,99",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-7631aa01880d4818bc41dfe869cf3345.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Arroz-Branco-Tipo-1-Tio-Urbano-Selecao-Especial-Pacote-5kg"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Arroz Soltinho Tp1 Pc.5Kg",
+            "Preco": "R$ 26,99",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-ca4d3355b70545308c4cf2b8e1b48df6.png",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Arroz-Soltinho-Tp1-Pc-5Kg"
+        },
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Arroz Patti Tp2 Pc 5Kg",
+            "Preco": "R$ 21,99",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-6e686438c1304ec5adea9b92d6cfc552.png",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Arroz-Patti-Tp2-Pc-5Kg"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Arroz Tipo1 Bernardo Pacote 5kg ",
+            "Preco": "R$ 23,49",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/190896-300-300?v=637727772492130000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/arroz-tipo1-bernardo-pacote-5kg/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Arroz TIO URBANO Tipo 1 Pacote 5kg ",
+            "Preco": "R$ 35,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/190029-300-300?v=637717201618730000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/arroz-tio-urbano-tipo-1-pacote-5kg/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Arroz Branco SOLTINHO Tipo 1 Pacote 5kg ",
+            "Preco": "R$ 28,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/188358-300-300?v=637690415001000000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/arroz-branco-soltinho-tipo-1-pacote-5kg/p"
+        }
+    ],
+    "arroz :irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Macarrão de Arroz Urbano Parafuso Zero Glúten 500g",
+            "Preco": "R$ 3,49",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896038310197/7896038310197_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/macarrão-de-arroz-urbano-parafuso-zero-glúten-500g-7896038310197"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Macarrão de Arroz Urbano Pena Zero Glúten 500g",
+            "Preco": "R$ 3,49",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896038305193/7896038305193_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/macarrão-de-arroz-urbano-pena-zero-glúten-500g-7896038305193"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Farinha de Arroz Flocada Urbano Flocão 500g",
+            "Preco": "R$ 3,65",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896038360192/7896038360192_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/farinha-de-arroz-flocada-urbano-flocão-500g-7896038360192"
+        }
+    ],
+    "macarrão:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Macarão Itália Sêmola Parafuso 500g",
+            "Preco": "R$ 3,85",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896080825144/7896080825144_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/macarão-itália-sêmola-parafuso-500g-7896080825144"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Macarrão Adria Grano Duro Fusilli 500g",
+            "Preco": "R$ 12,45",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896205752362/7896205752362_1_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/macarrão-adria-grano-duro-fusilli-500g-7896205752362"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Macarrão Da Roz Caseiro com Ovos Farfalle 500g",
+            "Preco": "R$ 9,60",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896070121041/7896070121041_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/macarrão-da-roz-caseiro-com-ovos-farfalle-500g-7896070121041"
+        }
+    ],
+    "sabonete líquido:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Protex Antibacteriano Aloe 85g",
+            "Preco": "R$ 2,98",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7891024035085/7891024035085_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-protex-antibacteriano-aloe-85g-7891024035085"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Nivea Leite 85g",
+            "Preco": "R$ 4,35",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/4005900521910/4005900521910_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-nivea-leite-85g-4005900521910"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Nivea Toque de Baunilha 85g",
+            "Preco": "R$ 4,35",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/4005900527073/4005900527073_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-nivea-toque-de-baunilha-85g-4005900527073"
+        }
+    ],
+    "óleo:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Albany Controle de Oleosidade Mentol Homem Envoltório 85g",
+            "Preco": "R$ 1,49",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7897664171756/7897664171756_1_7.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-albany-controle-de-oleosidade-mentol-homem-envoltório-85g-7897664171756"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Protex Antibacteriano Duo Protect 85g",
+            "Preco": "R$ 2,98",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7509546665061/7509546665061_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-protex-antibacteriano-duo-protect-85g-7509546665061"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Sabonete Barra Palmolive Óleo de Argan e Oil-Complex 85g",
+            "Preco": "R$ 3,10",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7891024034743/7891024034743_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/sabonete-barra-palmolive-óleo-de-argan-e-oil-complex-85g-7891024034743"
+        }
+    ],
+    "óleo 1lt:irmãos gonçalves": [
+        "NENHUM PRODUTO ACHADO!"
+    ],
+    "lava roupas:irmãos gonçalves": [
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Triex Coco 800g",
+            "Preco": "R$ 3,40",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896527702595/7896527702595_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-triex-coco-800g-7896527702595"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Triex Flowers 800g",
+            "Preco": "R$ 3,40",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896527702601/7896527702601_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-triex-flowers-800g-7896527702601"
+        },
+        {
+            "Mercado": "Irmãos Gonçalves",
+            "Titulo": "Lava Roupas em Pó Triex Multiação 800g",
+            "Preco": "R$ 3,40",
+            "Img": "https://conteudo.irmaosgoncalves.com.br/produto/7896527702618/7896527702618_1.jpg?height=200",
+            "Link": "https://www.irmaosgoncalves.com.br/produto/lava-roupas-em-pó-triex-multiação-800g-7896527702618"
+        }
+    ]
+}

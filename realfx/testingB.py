@@ -26,7 +26,7 @@ def display_best_price(data):
             st.image(cheapest_product["Img"], width=200)
 
         with col2:
-            titulo = cheapest_product["Titulo"].encode("utf-8").decode("utf-8")
+            titulo = cheapest_product["Titulo"]
             st.markdown(f"### {titulo}")
             st.markdown(f"**Preço:**  {cheapest_product['Preco']}")
             st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
@@ -42,7 +42,7 @@ def display_products(data):
     for item in data:
         products.append({
             "Mercado": item["Mercado"],
-            "Produto": item["Titulo"].encode("utf-8").decode("utf-8"),  # Ensure "Titulo" is used as-is
+            "Produto": item["Titulo"],  # Ensure "Titulo" is used as-is
             "Preco": item["Preco"],
             "Link": item["Link"]
         })
@@ -63,7 +63,7 @@ def display_products(data):
 
 
 def load_data():
-    with open("product_data.json", "r") as f:
+    with open("product_data.json", "r", encoding="utf-8") as f:
         try:
             return json.load(f)
         except json.JSONDecodeError:

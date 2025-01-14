@@ -1,34 +1,38 @@
-import time
-
+import subprocess
 import streamlit as st
 import json
-import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder
-import subprocess
-import os
+import pandas as pd
 
-# Verifique se o BeautifulSoup está instalado
-#installed_packages = subprocess.run(["pip", "list"], capture_output=True, text=True)
-#installbs4 = subprocess.run(["pip","install", "beautifulsoup4"], capture_output=True, text=True)
-#st.text(installed_packages.stdout)
-#st.text(installbs4)
-# Configuração inicial do Streamlit
-st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 
-# Título e barra de busca
-st.title("🛒 PriceWise - Comparador de Preços")
-product_name = st.text_input("Digite o produto que deseja pesquisar:", placeholder="Ex. leite integral, cafe 500g (seja especifico para melhor busca)")
+def run_data_collection(product_name):
+    # Executa o coletarDados.py
+    subprocess.run(["python", "realfx/coletarDados.py", product_name, selection])
+    return True
 
-# Função para carregar os dados coletados do JSON
-def load_data():
-    with open("product_data.json", "r") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            st.error("Erro ao carregar os dados. O arquivo está corrompido ou vazio.")
-            return []
 
-# Função para exibir os produtos em formato de tabela interativa
+def display_best_price(data):
+    if not data:  # Check if data is empty
+        st.error('Json Vazio')
+        return False
+    else:
+        # Convert prices to floats for proper comparison
+        cheapest_product = min(data, key=lambda x: float(x["Preco"].replace("R$", "").replace(",", ".")))
+
+        st.subheader("💰 Melhor Preço Encontrado:")
+        col1, col2 = st.columns([1, 2])
+
+        with col1:
+            st.image(cheapest_product["Img"], width=200)
+
+        with col2:
+            titulo = cheapest_product["Titulo"]
+            st.markdown(f"### {titulo}")
+            st.markdown(f"**Preço:**  {cheapest_product['Preco']}")
+            st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
+            st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
+
+
 def display_products(data):
     st.divider()
     st.subheader("📊 Produtos Encontrados")
@@ -38,8 +42,8 @@ def display_products(data):
     for item in data:
         products.append({
             "Mercado": item["Mercado"],
-            "Produto": item["Titulo"],
-            "Preco":  item["Preco"],
+            "Produto": item["Titulo"],  # Ensure "Titulo" is used as-is
+            "Preco": item["Preco"],
             "Link": item["Link"]
         })
 
@@ -57,63 +61,37 @@ def display_products(data):
         theme="streamlit",
     )
 
-# Função para exibir o produto mais barato destacado
-def display_best_price(data):
-    cheapest_product = min(data, key=lambda x: str(x["Preco"].replace(",", ".")))
 
-    st.subheader("💰 Melhor Preço Encontrado:")
-    col1, col2 = st.columns([1, 2])
+def load_data():
+    with open("product_data.json", "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            st.error("Erro ao carregar os dados. O arquivo está corrompido ou vazio.")
+            return []
 
-    with col1:
-        st.image(cheapest_product["Img"], width=200, )
 
-    with col2:
-        st.markdown(f"### {cheapest_product['Titulo']}")
-        st.markdown(f"**Preço:**  {cheapest_product['Preco']}")
-        st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
-        st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
+st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 
-# Função para executar o coletarDados.py e tratar erros
-def run_data_collection(product_name):
-    if not product_name:
-        st.error('Erro. Você digitou algo? 🙃')
-        return False
+# Título e barra de busca
+st.title("🛒 PriceWise - Comparador de Preços")
+product_name = st.text_input("Digite o produto que deseja pesquisar:",
+                             placeholder="Ex. leite integral, cafe 500g (seja especifico para melhor busca)")
 
-    # Executa o coletarDados.py
-    process = subprocess.run(
-        ['python', 'coletarDados.py', product_name],
-        capture_output=True,
-        text=True  # Decodifica stdout e stderr automaticamente
-    )
+options = ["Todos", "Irmãos Gonçalves", "Meta21", "NovaEra"]
+selection = st.pills("Selecione qual mercado buscar:", options)
 
-    # Verifica se o processo foi bem-sucedido
-    if process.returncode == 0 and os.path.exists("product_data.json"):
-        return True
-
-    # Verifica mensagens de erro
-    error_message = process.stderr.lower()
-
-    if 'beautifulsoup4' in error_message:
-        st.warning("Pacote BeautifulSoup4 não encontrado. Instalando...")
-        subprocess.run(['pip', 'install', 'beautifulsoup4'])
-    elif 'nodriver' in error_message:
-        st.warning("Pacote Nodriver não encontrado. Instalando...")
-        subprocess.run(['pip', 'install', 'zendriver'])
-    else:
-        st.error("Erro ao coletar dados. Verifique o nome do produto ou tente novamente.")
-        return False
-
-    return False
-
-# Carregando e exibindo os dados se o produto for pesquisado
 if st.button('Pesquisar'):
     with st.spinner("Pesquisando..."):
-        if run_data_collection(product_name):
-            time.sleep(10)
-            data = load_data()
-            # Exibir o melhor preço
-            display_best_price(data)
-            # Exibir todos os produtos encontrados
-            display_products(data)
+        if not product_name:
+            st.error('Erro. Você digitou algo? 🙃')
         else:
-            st.error("Não foi possível carregar os dados.")
+            try:
+                if run_data_collection(product_name):
+                    data = load_data()
+                    # Exibir o melhor preço
+                    display_best_price(data)
+                    # Exibir todos os produtos encontrados
+                    display_products(data)
+            except Exception as e:
+                st.error(f"Erro durante a execução: {e}")
