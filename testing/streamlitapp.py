@@ -1,6 +1,5 @@
 import streamlit as st
 import subprocess
-import os
 
 seletor =  st.checkbox('Script seletor de cidade? (apenas na 1ª vez)')
 produto = st.text_input('text input', placeholder='leite integral, uva, ovo...')
