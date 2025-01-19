@@ -9,7 +9,7 @@ async def main():
 
     # Inicia o navegador com o perfil temporário
     browser = await uc.start(
-        headless=False,  # Modo headless para o Streamlit Cloud
+        headless=True,  # Modo headless para o Streamlit Cloud
         user_data_dir=user_data_dir,  # Usa o diretório temporário
         browser_args=['--no-sandbox', '--disable-dev-shm-usage']  # Argumentos para o Chrome
     )
