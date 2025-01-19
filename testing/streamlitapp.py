@@ -8,8 +8,7 @@ if st.button('Pesquisar IG'):
     with st.spinner('pesquisando'):
         if seletor:
              os1 = subprocess.run(["python",
-                                  "testing/scrapFile.py", produto, "True",
-                                  "True"],
+                                  "testing/scrapFile.py", produto, "True"],
                                  capture_output=True)
              st.write(os1)
         else:

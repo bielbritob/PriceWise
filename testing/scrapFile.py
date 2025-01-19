@@ -64,9 +64,13 @@ async def main():
 
     a = await page.query_selector('span[class="cursor-pointer"]')
     if a != None:
-        print('porto velho ja selecionado!')
+        print("""
+            @@@@@@@@@@@@@@@@@ porto velho selecionado, encontrado!!!!
+        """)
     else:
-        print('pvh aind ñ selecionado')
+        print("""
+            !!!!!!!!!!!!!!!!!!       PORTO VELHO NAO ENCONTRADO        !!!!!!!!!!!!!!!!!!!!!
+        """)
 
 
     await browser.stop()
