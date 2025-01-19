@@ -34,7 +34,7 @@ async def main():
 
     # Abre a página desejada
     page = await browser.get(f'https://www.irmaosgoncalves.com.br/pesquisa?q={produto}')
-    if seletorC:
+    if seletorC == True:
         print("Procurando o botão 'Selecione a cidade'...")
         await page.wait_for("div.relative select", timeout=2)
         selectb = await page.select("div.relative select")
@@ -62,15 +62,12 @@ async def main():
     else:
         print(await page.get_content())
 
-    # Salva o screenshot no diretório temporário
-    screenshot_path = "/tmp/screenshot.png"
-    await page.save_screenshot(screenshot_path)
-    print(f"Screenshot salvo em: {screenshot_path}")
-    # Verifica se o arquivo foi salvo
-    if os.path.exists(screenshot_path):
-        print("Screenshot salvo com sucesso!")
+    a = await page.query_selector('span[class="cursor-pointer"]')
+    if a != None:
+        print('porto velho ja selecionado!')
     else:
-        print("Erro ao salvar o screenshot.")
+        print('pvh aind ñ selecionado')
+
 
     await browser.stop()
 
