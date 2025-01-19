@@ -4,7 +4,13 @@ import json
 from st_aggrid import AgGrid, GridOptionsBuilder
 import pandas as pd
 import os
-from PIL import Image
+from streamlit_image_select import image_select
+
+# Initialize session state
+if 'product_name' not in st.session_state:
+    st.session_state['product_name'] = ''
+if 'selected_market' not in st.session_state:
+    st.session_state['selected_market'] = ''
 
 # Função para carregar o cache do arquivo JSON
 def carregar_cache():
@@ -27,9 +33,9 @@ def run_data_collection(product_name, selection):
     return True
 
 # Função para exibir o melhor preço encontrado
-def display_best_price(data):
+def display_best_price(data, logos):
     if not data:
-        st.error('Json Vazio')
+        st.error('Nenhum produto encontrado.')
         return False
     else:
         cheapest_product = min(data, key=lambda x: float(x["Preco"].replace("R$", "").replace(",", ".")))
@@ -45,6 +51,12 @@ def display_best_price(data):
             st.markdown(f"### {titulo}")
             st.markdown(f"**Preço:**  {cheapest_product['Preco']}")
             st.markdown(f"**Mercado:** {cheapest_product['Mercado']}")
+            mercado = cheapest_product["Mercado"]
+            if mercado in logos:
+                st.image(logosVERDE[mercado], width=100)  # Ajuste o tamanho conforme necessário
+            else:
+                st.write("Logo não encontrada")
+
             st.markdown(f"[🔗 Visitar Produto]({cheapest_product['Link']})")
 
 # Função para exibir todos os produtos encontrados em uma tabela interativa
@@ -72,6 +84,7 @@ def display_products(data):
         enable_enterprise_modules=False,
         height=400,
         theme="streamlit",
+        update_mode='no_update'  # Prevent automatic rerun on interaction
     )
 
 # Função para carregar os dados do arquivo JSON gerado pelo script de coleta
@@ -79,6 +92,16 @@ def load_data(product_name, selection):
     try:
         with open("product_data.json", "r", encoding="utf-8") as f:
             data = json.load(f)
+            # Verifica se os dados contêm a mensagem "NENHUM PRODUTO ACHADO!"
+            if isinstance(data, list) and len(data) == 1 and data[0] == "NENHUM PRODUTO ACHADO!":
+                st.warning(f"Nenhum produto encontrado para '{product_name}' no mercado '{selection}'.")
+                st.warning(f"O site não possui este produto. Tente mudar o nome e busque novamente.")
+                return None
+            # Verifica se os dados estão vazios
+            if not data:  # Verifica se a lista está vazia
+                st.warning(f"Nenhum produto encontrado para '{product_name}' no mercado '{selection}'.")
+                st.warning("O site não possui este produto ou o bot coletor de dados foi bloqueado. Tente novamente mais tarde.")
+                return None
             # Salva no cache usando a chave "produto:mercado"
             cache_key = f"{product_name.lower()}:{selection.lower()}"
             cache_buscas[cache_key] = data
@@ -86,83 +109,89 @@ def load_data(product_name, selection):
             return data
     except (FileNotFoundError, json.JSONDecodeError):
         st.error("Erro ao carregar os dados. O arquivo está corrompido ou vazio.")
-        return []
+        return None
 
 # Configuração da interface do Streamlit
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 
 # Título e barra de busca
-st.title("🛒 PriceWise - Comparador de Preços")
-product_name = st.text_input("Digite o produto que deseja pesquisar:",
-                             placeholder="Ex. leite integral, cafe 500g (seja específico para melhor busca)")
+st.title(" 🛒  PriceWise - Comparador de Preços")
 
-# Define the paths to the logos
-todos = "logos/todos.png"
-ig = "logos/ig.png"
-meta21 = "logos/meta21.png"
-novaera = "logos/novaera2.png"
+# Use a form to handle Enter key submission
+with st.form("search_form"):
+    product_name = st.text_input(
+        "Digite o produto que deseja pesquisar:",
+        placeholder="Ex. leite integral, cafe 500g (seja específico para melhor busca)",
+        value=st.session_state['product_name']
+    )
+    submit_button = st.form_submit_button("Pesquisar")
 
-
-# Resize images to a consistent size (e.g., 100x100 pixels)
-def resize_image(image_path, size=(70, 70)):
-    img = Image.open(image_path)
-    img = img.resize(size)
-    return img
-
-
-# Resize all logos
-todos_resized = resize_image(todos)
-ig_resized = resize_image(ig)
-meta21_resized = resize_image(meta21)
-novaera_resized = resize_image(novaera)
-
-# Define the options and their corresponding logos
-options = ["Todos", "Irmãos Gonçalves", "Meta21", "NovaEra"]
-logos = {
-    "Todos": todos_resized,  # No logo for "Todos"
-    "Irmãos Gonçalves": ig_resized,
-    "Meta21": meta21_resized,
-    "NovaEra": novaera_resized,
+# Logos para o melhor preço (verde)
+logosVERDE = {
+    "Todos": "logos/todos2.png",
+    "Irmãos Gonçalves": "logos/igVerde.png",
+    "Meta21": "logos/meta21Verde.png",
+    "Nova Era": "logos/novaeraVerde.png",
 }
 
-# Initialize session state to track the selected option
-if "selected_option" not in st.session_state:
-    st.session_state.selected_option = options[0]  # Default to "Todos"
+# Logos padrão
+logos = {
+    "Todos": "logos/todos2.png",
+    "Irmãos Gonçalves": "logos/ig2.png",
+    "Meta21": "logos/meta21.png",
+    "Nova Era": "logos/novaera300.png",
+}
 
-# Create a custom layout for the pills
-cols = st.columns(len(options))
+# Convert the dictionary to lists for image_select
+images = list(logos.values())
+captions = list(logos.keys())
 
-for i, option in enumerate(options):
-    with cols[i]:
-        # Display the logo (if available)
-        if logos[option]:
-            st.image(logos[option], width=70)  # Adjust width as needed
+# Display the image selector
+selected_index = image_select(
+    label="Selecione um mercado",
+    images=images,
+    captions=captions,
+    index=0,  # Default selected image index
+    return_value="index",  # Return the index of the selected image
+)
 
-        # Display the pill (clickable text)
-        if st.button(option):
-            st.session_state.selected_option = option
+# Get the selected market name
+selected_market = captions[selected_index]
 
-# Display the selected option
-st.write(f"Você selecionou: **{st.session_state.selected_option}**")
+# Display the selected market
+st.write(f"Você selecionou: **{selected_market}**")
 
-if st.button('Pesquisar'):
+# Iniciar busca quando o formulário é submetido (pressionar Enter ou clicar no botão)
+if submit_button:
     with st.spinner("Pesquisando..."):
         if not product_name:
-            st.error('Erro. Você digitou algo? 🙃')
+            st.error("Erro. Você digitou algo? 🙃")
         else:
             try:
-                # Gera a chave do cache
-                cache_key = f"{product_name.lower()}:{st.session_state.selected_option.lower()}"
+                # Update session state
+                st.session_state['product_name'] = product_name
+                st.session_state['selected_market'] = selected_market
 
-                # Verifica se existe um cache para a chave "produto:mercado"
+                # Verificar cache
+                cache_key = f"{product_name.lower()}:{selected_market.lower()}"
                 if cache_key in cache_buscas:
                     st.success("Resultado carregado do cache! 🚀")
-                    display_best_price(cache_buscas[cache_key])
-                    display_products(cache_buscas[cache_key])
+                    cached_data = cache_buscas[cache_key]
+                    # Verifica se o cache contém a mensagem "NENHUM PRODUTO ACHADO!"
+                    if isinstance(cached_data, list) and len(cached_data) == 1 and cached_data[0] == "NENHUM PRODUTO ACHADO!":
+                        st.warning(f"CACHE: Nenhum produto encontrado para '{product_name}' no mercado '{selected_market}'.")
+                        st.warning(f"O site não possui este produto. Tente mudar o nome e busque novamente.")
+                    elif cached_data:  # Verifica se o cache não está vazio
+                        display_best_price(cached_data, logosVERDE)
+                        display_products(cached_data)
+                    else:
+                        st.warning(f"CACHE: Nenhum produto encontrado para '{product_name}' no mercado '{selected_market}'.")
+                        st.warning("O site não possui este produto ou o bot coletor de dados foi bloqueado. Tente novamente mais tarde.")
                 else:
-                    run_data_collection(product_name, st.session_state.selected_option)
-                    data = load_data(product_name, st.session_state.selected_option)
-                    display_best_price(data)
-                    display_products(data)
+                    run_data_collection(product_name, selected_market)
+                    data = load_data(product_name, selected_market)
+                    if data:  # Verifica se os dados não estão vazios
+                        display_best_price(data, logosVERDE)
+                        display_products(data)
             except Exception as e:
                 st.error(f"Erro durante a execução: {e}")

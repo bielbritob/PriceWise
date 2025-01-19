@@ -47,8 +47,13 @@ USER_AGENTS = [
 async def search_ig():
     # --------Inicia Navegador...
     random_user_agent = get_random_user_agent(USER_AGENTS)
-    browser = await uc.start(headless=True, user_agent=random_user_agent)
-    page = await browser.get(urls["ig"])  # abre url ig
+    browser = await uc.start(
+        headless=True,
+        user_agent=random_user_agent,
+        user_data_dir="/home/usr/.config/chrome-profile",  # Replace with your actual profile path
+        browser_executable_path="/usr/bin/google-chrome"  # Replace with your actual Chrome path
+    )
+    page = await browser.get(urls["ig"])  # Open the IG URL
 
     print("\n#########- PARTE DEBUG IG -#########\n")
     # ------Select button finder

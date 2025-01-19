@@ -4,7 +4,6 @@ import json
 from st_aggrid import AgGrid, GridOptionsBuilder
 import pandas as pd
 import os
-from PIL import Image
 from streamlit_image_select import image_select
 
 # Função para carregar o cache do arquivo JSON
