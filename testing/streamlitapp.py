@@ -17,7 +17,10 @@ if st.button('Pesquisar IG'):
                                 capture_output=True)
             st.write(os)
         screenshot_path = "/tmp/screenshot.png"
-        st.image(screenshot_path, caption="Screenshot da página")
+        if os.path.exists(screenshot_path):
+            st.image(screenshot_path, caption="Screenshot da página")
+        else:
+            st.error("Erro: Screenshot não encontrado.")
 
 
 

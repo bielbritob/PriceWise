@@ -66,6 +66,11 @@ async def main():
     screenshot_path = "/tmp/screenshot.png"
     await page.save_screenshot(screenshot_path)
     print(f"Screenshot salvo em: {screenshot_path}")
+    # Verifica se o arquivo foi salvo
+    if os.path.exists(screenshot_path):
+        print("Screenshot salvo com sucesso!")
+    else:
+        print("Erro ao salvar o screenshot.")
 
     await browser.stop()
 
