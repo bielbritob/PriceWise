@@ -2,6 +2,8 @@ import os
 import time
 import subprocess
 import threading
+from subprocess import check_output
+
 from flask import Flask, request, jsonify
 import requests
 from flask_httpauth import HTTPBasicAuth
@@ -68,18 +70,21 @@ def pesquisar_produto():
         return jsonify({"error": "Resposta inválida da API"}), 500
 
 
-lastOutputNgrok = None
+
 
 def rodar_ngrok():
-    global lastOutputNgrok
+    """WORKs, but dont return forward url"""
     # Caminho completo para o executável do Ngrok
     caminho_ngrok = r"C:\ProgramData\chocolatey\bin\ngrok.exe"
     comando = f'"{caminho_ngrok}" http 8080'
     p = subprocess.Popen(comando, stdout=subprocess.PIPE)
-    for _ in range(3):
-        print(p)
-        time.sleep(2)
-        print(p)
+
+def alt_run_ngrok():
+    caminho_ngrok = r"C:\ProgramData\chocolatey\bin\ngrok.exe"
+    comando = f'"{caminho_ngrok}" http 8080'
+    p = subprocess.Popen(comando, stdout=subprocess.PIPE)
+    time.sleep(0.12)
+    print(" [NGROK LOG] ".center(100, "_"))
 
 
 def rodar_flask():
@@ -89,7 +94,10 @@ def rodar_flask():
 
 if __name__ == '__main__':
     # Roda o Ngrok em segundo plano
-    rodar_ngrok()
+    #rodar_ngrok()
+    print(" [NGROK LOG] ".center(100, "_"))
+
+    alt_run_ngrok()
 
     # Aguarda alguns segundos para o Ngrok iniciar
     time.sleep(5)

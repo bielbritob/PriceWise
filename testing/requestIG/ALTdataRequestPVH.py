@@ -3,7 +3,7 @@ import sqlite3
 from rich import print
 
 # Conectar ao banco de dados SQLite3 (ou criar se não existir)
-conn = sqlite3.connect('produtos.db')
+conn = sqlite3.connect('../produtos.db')
 cursor = conn.cursor()
 
 # Criar a tabela se ela não existir
@@ -11,12 +11,13 @@ cursor.execute('''
 CREATE TABLE IF NOT EXISTS produtos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     ean TEXT UNIQUE,  -- Campo único para evitar duplicação
+    mercado TEXT,
     nome TEXT,
     marca TEXT,
     url TEXT,
     valor REAL,
     valorkg REAL,
-    valorAntigo REAL,
+    valorAntigo REAL, 
     imagem TEXT
 )
 ''')
@@ -96,10 +97,11 @@ for categoria in categorias:
             if cursor.fetchone() is None:
                 # Inserir no banco de dados
                 cursor.execute('''
-                INSERT INTO produtos (ean, nome, marca, url, valor, valorkg, valorAntigo, imagem)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
                     produto.get('ean'),
+                    'Irmãos Gonçalves',
                     produto.get('nome'),
                     produto.get('marca'),
                     url_completa,

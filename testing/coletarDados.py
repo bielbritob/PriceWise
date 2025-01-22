@@ -222,7 +222,6 @@ async def search_novaera():
         dados_produtos.append({"Mercado": "Nova Era", "Titulo": nome, "Preco": preco, "Img": img_src, "Link": link})
     print("Dados do Novaera coletado!")
     await browser.stop()
-    await browser.stop()
 
 def salvar_dados_json(dados, arquivo="product_data.json"):
     with open(arquivo, "w", encoding="utf-8") as f:

@@ -3,18 +3,13 @@ import subprocess
 
 seletor =  st.checkbox('Script seletor de cidade? (apenas na 1ª vez)')
 produto = st.text_input('text input', placeholder='leite integral, uva, ovo...')
-if st.button('Pesquisar IG'):
+
+if st.button('Pesquisar IG') and seletor:
     with st.spinner('pesquisando'):
-        if seletor:
-             os1 = subprocess.run(["python",
-                                  "testing/scrapFile.py", produto, "True"],
-                                 capture_output=True)
-             st.write(os1)
-        else:
-            os = subprocess.run(["python",
-                                 "testing/scrapFile.py", produto, "False"],
-                                capture_output=True)
-            st.write(os)
+         os1 = subprocess.run(["python",
+                              "testing/scrapFile.py", produto, "True"],
+                             capture_output=True)
+         st.write(os1)
 
 
 
