@@ -112,8 +112,7 @@ def obter_url_ngrok():
 
     return None
 
-def criar_gist(url):
-    token = "../s"  # Substitua pelo seu token
+def criar_gist(url):# Substitua pelo seu token
     gist_url = "https://api.github.com/gists"
     headers = {
         "Authorization": f"token {token}",
