@@ -691,7 +691,7 @@ def obter_url_ngrok():
 
 def ler_token():
     try:
-        with open("../tokenGIT.txt", "r") as f:
+        with open("tokenGIT.txt", "r") as f:
             token = f.read().strip()  # Remove espaços em branco e quebras de linha
             return token
     except FileNotFoundError:
@@ -723,7 +723,7 @@ def criar_gist(url):
         return None
 
 def salvar_gist_id(gist_id):
-    with open("../gist_id.txt", "w") as f:
+    with open("gist_id.txt", "w") as f:
         f.write(gist_id)
     # Faz commit e push do arquivo para o GitHub
     subprocess.run(["git", "add", "gist_id.txt"], shell=True)
