@@ -576,12 +576,12 @@ def enviar_para_github():
     subprocess.run(["git", "push", "origin", "main"])
 
 
-try:
-    coletar_dados_ig()
-    coletar_dados_meta21()
-    coletar_dados_novaera()
-    print("Todos os dados coletado com Success!!!")
-    enviar_para_github()
-except Exception as e:
-    print(f'error Exception {e}')
+
+#coletar_dados_ig()
+#coletar_dados_meta21()
+#coletar_dados_novaera()
+print("Todos os dados coletado com Success!!!")
+salvar_data_envio()
+enviar_para_github()
+
 
