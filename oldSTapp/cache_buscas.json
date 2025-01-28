@@ -1,0 +1,32 @@
+{
+    "leite integral:todos": [
+        {
+            "Mercado": "Meta21",
+            "Titulo": "Leite Integral NILZA 1L",
+            "Preco": "R$ 5,89",
+            "Img": "https://ibassets.com.br/ib.item.image.medium/m-ce3c92c8a6894a71a1f2cccf24fc19d1.jpeg",
+            "Link": "https://supermercadometa21.instabuy.com.br/p/Leite-Integral-NILZA-1L-1"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite UHT Integral NILZA Com Tampa Caixa 1L ",
+            "Preco": "R$ 5,69",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/204164-300-300?v=638105160512200000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-uht-integral-nilza-com-tampa-caixa-1l/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite em Pó PRIMALATTE Integral pacote 400g ",
+            "Preco": "R$ 11,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/219656-300-300?v=638711900332070000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-em-po-primalatte-integral-pacote-400g-/p"
+        },
+        {
+            "Mercado": "Nova Era",
+            "Titulo": "Leite Pó Piracanjuba Integral Pacote 1kg ",
+            "Preco": "R$ 43,99",
+            "Img": "https://mercantilnovaera.vtexassets.com/arquivos/ids/192507-300-300?v=637745849723030000&width=300&height=300&aspect=true",
+            "Link": "https://www.supernovaera.com.br/leite-po-piracanjuba-integral-pacote-1kg/p"
+        }
+    ]
+}

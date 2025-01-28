@@ -97,7 +97,7 @@ def coletar_dados_ig():
                 # Formatar a URL e a imagem
                 url_completa = f"https://www.irmaosgoncalves.com.br{produto.get('url')}"
                 imagem_completa = f"https://conteudo.irmaosgoncalves.com.br/produto{produto.get('imagem')}"
-
+                ean = f"IgEan: {produto.get('ean')}"
                 # Verificar se o produto já existe no banco de dados (usando o campo 'ean' como chave única)
                 cursor.execute('SELECT * FROM produtos WHERE ean = ?', (produto.get('ean'),))
                 if cursor.fetchone() is None:
@@ -106,7 +106,7 @@ def coletar_dados_ig():
                     INSERT INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
-                        produto.get('ean'),
+                        ean,
                         'Irmãos Gonçalves',
                         produto.get('nome'),
                         produto.get('marca'),
@@ -324,7 +324,7 @@ def coletar_dados_meta21():
                             INSERT INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                             ''', (
-                                ean,
+                                f"Meta21Ean: {ean}",
                                 'Meta21',
                                 produto.get('name'),
                                 produto.get('brand', ''),  # Usar string vazia se 'brand' não existir
@@ -540,7 +540,7 @@ def coletar_dados_novaera():
                     INSERT INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (
-                        ean,
+                        f'NovaEraEan: {ean}',
                         'Nova Era',
                         produto.get("productName"),
                         produto.get("brand", ''),
@@ -573,15 +573,15 @@ def enviar_para_github():
     subprocess.run(["git", "add", "produtos.db"])
     subprocess.run(["git", "add", "last_sent_date.txt"])
     subprocess.run(["git", "commit", "-m", f"Atualização diária do banco de dados - dia: {data_atual}"])
-    subprocess.run(["git", "push", "origin", "main"])
+    subprocess.run(["git", "push"])
 
 
 
-#coletar_dados_ig()
-#coletar_dados_meta21()
-#coletar_dados_novaera()
+coletar_dados_ig()
+coletar_dados_meta21()
+coletar_dados_novaera()
 print("Todos os dados coletado com Success!!!")
-salvar_data_envio()
-enviar_para_github()
+#salvar_data_envio()
+#enviar_para_github()
 
 

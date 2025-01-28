@@ -1,8 +1,8 @@
-- make the scrapScrit save the chrome data and uses this. (like the algorithm ig 'addres select', all their addres have the same price of products) [working now]
+- make the scrapScrit save the chrome data and uses this. (like the algorithm ig 'addres select', all their addres have the same price of products) - [refactored in db with 26k of products ✅]
 
-- improve the cache algorithm [...]
+- improve the cache algorithm - [now have a db with 26k of products ✅]
 
-- improve the scrapScript, add an algorithm that if the product not exist in site the algorithm return that to user. [...]
+- improve the scrapScript, add an algorithm that if the product not exist in site the algorithm return that to user. [db have only stock products ✅]
 
 - improve the product finder(sometimes dont display correctly product(some times the user search 'azeite' and hopes to see smth like 'azeite 180ml vidro' not 'atum em molho de azeite')) [...]
 

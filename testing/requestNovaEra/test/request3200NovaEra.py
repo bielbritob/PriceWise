@@ -1,55 +1,52 @@
-import sqlite3
 import requests
 import json
+import sqlite3
 import time
+from rich import print
 
-# Conectar ao banco de dados
-conn = sqlite3.connect('produtos.db')
-cursor = conn.cursor()
+# URL base da API
+BASE_URL = "https://www.supernovaera.com.br/_v/segment/graphql/v1"
 
-# Criar a tabela de produtos (se não existir)
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS produtos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    ean TEXT UNIQUE, -- unique 
-    mercado TEXT,
-    nome TEXT,
-    marca TEXT, 
-    url TEXT,
-    valor REAL,
-    valorkg REAL,
-    valorAntigo REAL,
-    imagem TEXT
-)
-""")
-conn.commit()
-
-# URL da API
-url = "https://www.supernovaera.com.br/_v/segment/graphql/v1"
-
-# Cabeçalhos
-headers = {
+# Cabeçalhos para as requisições
+HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     "Accept": "application/json",
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
 }
 
-# Cookies
-cookies = {
+# Cookies necessários (ajustar conforme necessário)
+COOKIES = {
     'vtex-search-anonymous': '3a3ee8bbef864fa182366d6c16b2de60',
     'checkout.vtex.com': '__ofid=96e47bc532ab48f9b278980f5ec7bbd5',
     'VtexWorkspace': 'master%3A-',
     'vtex-search-session': 'b16e127bb4f84c2491653ff537277e0c',
     'vtex_binding_address': 'mercantilnovaera.myvtex.com/',
     'vtex_session': 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjhkMDg0ZmViLTg2MDQtNDUwOS1iYjE4LTZlYzNlY2M0ZDM5ZSIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50LmlkIjpbXSwiaWQiOiJlNzRhNDNlOC1jNjcwLTQ2MTctYWM3Ni0wMmIwOGMyZmZkNjMiLCJ2ZXJzaW9uIjo1LCJzdWIiOiJzZXNzaW9uIiwiYWNjb3VudCI6InNlc3Npb24iLCJleHAiOjE3MzgzNzI1MjIsImlhdCI6MTczNzY4MTMyMiwianRpIjoiZjE0OWJmZjctODQwOC00ZTEzLTkzOTItYjAwZjhjYmRmNDE3IiwiaXNzIjoic2Vzc2lvbi9kYXRhLXNpZ25lciJ9.KTFBQweytaRo_wwfRwzDn1TcEbHnZy1bNvi_da8rhD-SF3Zzp1xkJgGr56o2XGjPuQjhsZNLvE4OXb45Zd69ZQ',
-    'vtex_segment': 'eyJjYW1wYWlnbnMiOm51bGwsImNoYW5uZWwiOiIxIiwicHJpY2VUYWJsZXMiOm51bGwsInJlZ2lvbklkIjoiVTFjamJXVnlZMkZ1ZEdsc2JtOTJZV1Z5WVd4dmFtRXlPQT09IiwidXRtX2NhbXBhaWduIjpudWxsLCJ1dG1fc291cmNlIjpudWxsLCJ1dG1pX2CgZa2Ad2SBpqcuwhcLfNpgqlR6LpyadLJBERTqAbNIRrPaCLq0ingSm/ew6w+MSg4qXeUOMdP7jLcAqv1ifko9aObE=',
+    'vtex_segment': 'eyJjYW1wYWlnbnMiOm51bGwsImNoYW5uZWwiOiIxIiwicHJpY2VUYWJsZXMiOm51bGwsInJlZ2lvbklkIjoiVTFjamJXVnlZMkZ1ZEdsc2JtOTJZV1Z5WVd4dmFtRXlPQT09IiwidXRtX2NhbXBhaWduIjpudWxsLCJ1dG1fc291cmNlIjpudWxsLCJ1dG1pX2NhbXBhaWduIjpudWxsLCJjdXJyZW5jeUNvZGUiOiJCUkwiLCJjdXJyZW5jeVN5bWJvbCI6IlIkIiwiY291bnRyeUNvZGUiOiJCUkEiLCJjdWx0dXJlSW5mbyI6InB0LUJSIiwiY2hhbm5lbFByaXZhY3kiOiJwdWJsaWMifQ',
+    'CheckoutOrderFormOwnership': 'fRyVUn2+V+yAHuoVCI9oneYQ0ZInsiOZ3hMlPwr82wWXp8tc9tg9LmAtfcGjm+Ry1Me7iPdnezPhMnFKUxBZ7TcWEna28vaEVj0Dc8pVLmJvN+buRsbErjbtp7nXte8XjnjT+mhhACYYNxXu0RyR3ssioU5+KraRJd88fJOG4gt8eRK3uHonp/O7O5PW6PL7lKcRg8ZFRQUq3GyF7CgZa2Ad2SBpqcuwhcLfNpgqlR6LpyadLJBERTqAbNIRrPaCLq0ingSm/ew6w+MSg4qXeUOMdP7jLcAqv1ifko9aObE=',
     'biggy-search-history': 'leite%20uht%2CAbacaxi%20P%C3%A9rola%2Ccaf%C3%A9%20500g',
     'janus_sid': '01294fb0-89ec-4559-a7d3-bc2bc10fd8cc',
 }
 
-# Função para buscar produtos
-def buscar_produtos(from_index, to_index):
-    # Parâmetros da requisição
+# Lista de categorias
+CATEGORIAS = [
+    "alimentos",
+    "bebidas",
+    "casa-e-bazar",
+    "vestuario",
+    "cuidados-com-a-roupa",
+    "utilitarios-e-descartaveis",
+    "eletro",
+    "automotivo",
+    "higiene-e-beleza",
+    "infantil",
+    "limpeza",
+    "pet-shop"
+]
+
+
+def buscar_produtos(categoria, from_index, to_index):
+    """Faz uma requisição à API para buscar produtos de uma categoria em um intervalo de índices."""
     params = {
         "workspace": "master",
         "maxAge": "short",
@@ -65,11 +62,11 @@ def buscar_produtos(from_index, to_index):
             "installationCriteria": "MAX_WITHOUT_INTEREST",
             "productOriginVtex": False,
             "map": "c,c",
-            "query": "",  # Query vazia para buscar todos os produtos
-            "orderBy": "OrderByNameASC",  # Ordenar por nome em ordem alfabética
+            "query": categoria,  # Categoria específica
+            "orderBy": "OrderByNameASC",  # Ordenar alfabeticamente
             "from": from_index,
             "to": to_index,
-            "selectedFacets": [],  # Lista vazia para remover filtros
+            "selectedFacets": [],
             "operator": "and",
             "fuzzy": "0",
             "searchState": None,
@@ -93,111 +90,125 @@ def buscar_produtos(from_index, to_index):
         })
     }
 
-    # Fazer a requisição
     try:
-        response = requests.get(url, params=params, headers=headers, cookies=cookies)
-        response.raise_for_status()  # Levanta uma exceção para códigos de status HTTP ruins
+        response = requests.get(BASE_URL, headers=HEADERS, cookies=COOKIES, params=params)
+        response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Erro na requisição: {e}")
+        print(f"[bold red]Erro na requisição para a categoria '{categoria}': {e}[/bold red]")
         return None
 
-# Função para coletar todos os produtos
+
+def salvar_no_banco(produtos, categoria):
+    """Salva os produtos no banco de dados."""
+    conn = sqlite3.connect('produtos.db')
+    cursor = conn.cursor()
+
+    # Criação da tabela se não existir
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS produtos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ean TEXT UNIQUE,  -- Chave única
+            mercado TEXT,
+            nome TEXT,
+            marca TEXT,
+            categoria TEXT,
+            url TEXT,
+            valor REAL,
+            valorkg REAL,
+            valorAntigo REAL,
+            imagem TEXT
+        )
+    """)
+    conn.commit()
+
+    for produto in produtos:
+        try:
+            stock = produto["items"][0]["sellers"][0]["commertialOffer"].get("AvailableQuantity")
+            if stock > 0:
+                url_completa = f"https://www.supernovaera.com.br{produto.get('link')}"
+                image_url = produto["items"][0]["images"][0].get("imageUrl", "")
+                prices = produto["items"][0]["sellers"][0]["commertialOffer"].get("Price", 0)
+                itemId = produto["items"][0].get("itemId", "")
+                trueEan = produto["items"][0].get("ean", itemId)
+                if trueEan != int:
+                   trueEan = produto["items"][0].get("itemId")
+
+
+                # Verificar se o produto já existe no banco
+                cursor.execute("SELECT * FROM produtos WHERE ean = ?", (trueEan,))
+                existing_product = cursor.fetchone()
+
+                if existing_product:
+                    # Atualizar produto se o preço for diferente
+                    old_price = existing_product[6]  # Índice do campo `valor`
+                    if old_price != prices:
+                        cursor.execute("""
+                            UPDATE produtos
+                            SET valor = ?, imagem = ?, nome = ?, marca = ?, url = ?
+                            WHERE ean = ?
+                        """, (
+                            prices,
+                            image_url,
+                            produto.get("productName", ""),
+                            produto.get("brand", ""),
+                            url_completa,
+                            f'NovaEraEan: {trueEan}'
+                        ))
+                else:
+                    # Inserir novo produto
+                    cursor.execute("""
+                        INSERT OR REPLACE INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (
+                        f'NovaEraEan: {trueEan}',
+                        "Nova Era",
+                        produto.get("productName", ""),
+                        produto.get("brand", ""),
+                        url_completa,
+                        prices,
+                        None,
+                        None,
+                        image_url
+                    ))
+                conn.commit()
+            else:
+                print('produto não DISPONIVEL STOCK = 0')
+        except Exception as e:
+            print(f"[bold red]Erro ao salvar produto no banco: {e}[/bold red]")
+
+    conn.close()
+
+
 def coletar_todos_produtos():
-    todos_produtos = []
-    from_index = 0
-    page_size = 50  # Número de produtos por página
-    max_tentativas = 3  # Número máximo de tentativas em caso de falha
-    limite_produtos = 3212  # Limite máximo de produtos
+    """Coleta todos os produtos de todas as categorias."""
+    for categoria in CATEGORIAS:
+        print(f"[blue]Iniciando coleta para a categoria: {categoria}[/blue]")
+        todos_produtos = []
+        page_size = 100  # Produtos por página
+        from_index = 0
 
-    while from_index < limite_produtos:
-        tentativas = 0
-        data = None
+        while True:
+            to_index = from_index + page_size - 1
+            print(f"[cyan]Coletando produtos de {from_index} a {to_index} para a categoria '{categoria}'...[/cyan]")
+            data = buscar_produtos(categoria, from_index, to_index)
 
-        # Tentar buscar os produtos até o número máximo de tentativas
-        while tentativas < max_tentativas:
-            to_index = min(from_index + page_size - 1, limite_produtos - 1)  # Ajusta o valor de `to`
-            data = buscar_produtos(from_index, to_index)
-            if data is not None:
-                break  # Sai do loop se os dados forem obtidos com sucesso
-            tentativas += 1
-            print(f"Tentativa {tentativas} de {max_tentativas}...")
-            time.sleep(2)  # Espera 2 segundos antes de tentar novamente
+            if not data or "data" not in data or "productSearch" not in data["data"]:
+                print(f"[yellow]Nenhum dado retornado para a categoria '{categoria}'. Fim da coleta.[/yellow]")
+                break
 
-        # Se não conseguir obter os dados após as tentativas, interrompe o loop
-        if data is None:
-            print("Não foi possível obter os dados após várias tentativas. Interrompendo...")
-            break
+            produtos = data["data"]["productSearch"].get("products", [])
+            if not produtos:
+                print(f"[yellow]Sem mais produtos para coletar na categoria '{categoria}'.[/yellow]")
+                break
 
-        # Verificar se a resposta contém produtos
-        if not isinstance(data, dict) or "data" not in data or "productSearch" not in data["data"] or "products" not in data["data"]["productSearch"]:
-            print("Resposta da API não contém produtos. Interrompendo...")
-            break
+            todos_produtos.extend(produtos)
+            salvar_no_banco(produtos, categoria)
 
-        produtos = data["data"]["productSearch"]["products"]
+            from_index += page_size
+            time.sleep(0.1)  # Pausa para evitar rate-limiting
 
-        # Adicionar produtos à lista
-        todos_produtos.extend(produtos)
+        print(f"[green]Total de produtos coletados para a categoria '{categoria}': {len(todos_produtos)}[/green]")
 
-        # Verificar se atingiu o limite de produtos
-        if len(todos_produtos) >= limite_produtos:
-            print(f"Limite de {limite_produtos} produtos atingido. Interrompendo...")
-            break
-
-        # Verificar se há mais produtos
-        if len(produtos) < page_size:
-            break  # Fim dos resultados
-
-        # Atualizar índice para a próxima página
-        from_index += page_size
-        print(f"Coletados {len(todos_produtos)} produtos até agora...")
-
-        # Pausa entre requisições para evitar rate limiting
-        time.sleep(1)
-
-    return todos_produtos
-
-# Coletar todos os produtos
-todos_produtos = coletar_todos_produtos()
-
-# Salvar os produtos no banco de dados
-for produto in todos_produtos:
-    url_completa = f"https://www.supernovaera.com.br{produto.get('link')}"
-    image_url = produto["items"][0]["images"][0].get("imageUrl")  # Ajuste para acessar a URL da imagem corretamente
-    prices = produto["items"][0]["sellers"][0]["commertialOffer"].get("Price")
-    if prices:
-        itemId = produto["items"][0].get("itemId")
-        trueEan = produto["items"][0].get("ean")
-        ean = trueEan if trueEan is not None else itemId
-
-        # Verificar se o produto já existe no banco de dados (usando o campo 'ean' como chave única)
-        cursor.execute('SELECT * FROM produtos WHERE ean = ?', (ean,))
-        if cursor.fetchone() is None:
-            # Inserir no banco de dados
-            cursor.execute("""
-            INSERT INTO produtos (ean, mercado, nome, marca, url, valor, valorkg, valorAntigo, imagem)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                ean,
-                'Nova Era',
-                produto.get("productName"),
-                produto.get("brand", ''),
-                url_completa,
-                prices,
-                None,  # valorkg (ajuste conforme necessário)
-                None,  # valorAntigo (ajuste conforme necessário)
-                image_url
-            ))
-            conn.commit()
-
-# Fechar a conexão com o banco de dados
-conn.close()
-
-# Exibir total de produtos coletados
-print(f"Total de produtos coletados: {len(todos_produtos)}")
-
-# Salvar os produtos em um arquivo JSON (opcional)
-with open("todos_produtos.json", "w", encoding="utf-8") as f:
-    json.dump(todos_produtos, f, ensure_ascii=False, indent=2)
-
-print("Produtos salvos em 'todos_produtos.json'.")
+# Iniciar coleta
+coletar_todos_produtos()
