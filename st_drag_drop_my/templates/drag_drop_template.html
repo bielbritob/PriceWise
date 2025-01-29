@@ -1,0 +1,25 @@
+<!-- Fixed draggable area -->
+<div class="draggable-area">
+    <h3>Produtos:</h3>
+    {% for key, value in draggable_items.items() %}
+    <div class="draggable" draggable="true" id="draggable-{{ key }}">{{ value }}</div>
+    {% endfor %}
+</div>
+
+<!-- Scrollable droppable container -->
+<div class="scrollable-container" id="scrollable-container">
+    <h3>Zona para dropar:</h3>
+    <div class="droppable-list">
+        {% for key, value in droppable_items.items() %}
+        <div class="droppable" id="droppable-{{ key }}">{{ value }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Extra draggable area -->
+<div class="draggable-area">
+    <h3>Mais produtos:</h3>
+    {% for key, value in extra_items.items() %}
+    <div class="draggable" draggable="true" id="extra-{{ key }}">{{ value }}</div>
+    {% endfor %}
+</div>

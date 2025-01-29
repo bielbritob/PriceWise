@@ -15,16 +15,18 @@ st.title("🛒 PriceWise - Comparador de Preços", )
 # Dividindo a página em 3 colunas: link ficará na direita
 col1, col2, col3 = st.columns([1, 3, 1])
 st.header("")
+a = 'currentSTapp/page2.py'
+
 with col3:  # Adiciona o link na última coluna (direita)
     st.markdown(
         """
         <div style="text-align: right;">
-            <a href="https://example.com" target="_blank" style="text-decoration: none;
+            <a href="currentSTapp/page2.py" target="_blank" style="text-decoration: none;
              color: white;
               background-color: rgba(143, 151, 74, 0.15;
                padding: 10px 15px;
                 border-radius: 5px;
-                ">🏠 Home
+                ">🏠 Modo Lista
             </a>
         </div>
         """,
@@ -264,7 +266,7 @@ if submit_button:
                 produtos = buscar_produtos(product_name, selected_market)
                 if produtos:
                     if selected_market == 'Todos':
-                        st.subheader(f'Resultados para  "_**{product_name}**_ " em  todos mercados:')
+                        st.subheader(f'Resultados para  :gray-background["*_{product_name}_*"] em  todos mercados:')
                         for produto in produtos:
                             # Extrai os campos do produto
                             nome = produto[3]  # Nome do produto

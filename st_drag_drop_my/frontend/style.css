@@ -1,0 +1,124 @@
+/* Tema escuro do Streamlit */
+:root {
+  --primary-bg: #0e1117;
+  --secondary-bg: #262730;
+  --text-color: #fafafa;
+  --border-color: #3c3c3c;
+  --highlight-bg: #2d4d2d;
+}
+
+/* Layout principal */
+.container {
+  display: flex;
+  gap: 1rem;
+  max-width: 100%;
+  margin: 1rem;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+}
+
+/* Área fixa dos itens arrastáveis */
+.draggable-area {
+  width: 250px;
+  background-color: var(--secondary-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  position: sticky;
+  top: 1rem;
+  height: fit-content;
+}
+
+/* Container das zonas de drop */
+.scrollable-container {
+  flex-grow: 1;
+  background-color: var(--primary-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Itens arrastáveis */
+.draggable {
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: move;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.draggable:hover {
+  background-color: #303240;
+  transform: translateX(2px);
+}
+
+/* Zonas de drop */
+.droppable {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background-color: var(--secondary-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  min-height: 120px;
+  transition: all 0.2s ease;
+}
+
+.droppable.over {
+  background-color: var(--highlight-bg);
+  border-color: #4CAF50;
+}
+
+/* Itens dropados */
+.dropped-items {
+  margin-top: 0.5rem;
+}
+
+.dropped-items p {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background-color: #303240;
+  border-radius: 4px;
+}
+
+/* Títulos */
+h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+/* Esconder scrollbars */
+.scrollable-container::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+/* style.css */
+.droppable-zone {
+  border: 2px dashed #2ecc71;
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 300px;
+  background: rgba(46, 204, 113, 0.05);
+  margin-top: 20px;
+}
+
+.drop-instruction {
+  text-align: center;
+  color: #2ecc71;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .draggable-area {
+    width: 100% !important;
+    margin-right: 0 !important;
+  }
+
+  .droppable-zone {
+    min-height: 200px;
+  }
+}
