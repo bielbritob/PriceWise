@@ -45,56 +45,53 @@ function onRender(event) {
 
         const droppedItemId = event.dataTransfer.getData('text');
         const droppedItem = document.getElementById(droppedItemId);
-        const droppedItemText = droppedItem.textContent;
         const zoneId = droppable.id;
 
-        if (!dropConnections[zoneId]) {
-          dropConnections[zoneId] = [];
-        }
+        // Clona o item inteiro (com img e preço)
+        const clone = droppedItem.cloneNode(true);
+        clone.style.opacity = "0.8";
+        clone.style.transform = "scale(0.95)";
+        clone.draggable = false; // Impede re-arraste
 
-        if (dropConnections[zoneId].includes(droppedItemText)) {
-          alert(`${droppedItemText} já foi adicionado!`);
-          return;
-        }
+        // Cria container do item dropado
+        const droppedItemContainer = document.createElement('div');
+        droppedItemContainer.className = 'dropped-item';
+        droppedItemContainer.appendChild(clone);
 
-        dropConnections[zoneId].push(droppedItemText);
-
+        // Adiciona à zona
         let droppedItemsContainer = droppable.querySelector('.dropped-items');
         if (!droppedItemsContainer) {
           droppedItemsContainer = document.createElement('div');
-          droppedItemsContainer.classList.add('dropped-items');
+          droppedItemsContainer.className = 'dropped-items';
           droppable.appendChild(droppedItemsContainer);
         }
 
-        droppedItemsContainer.innerHTML = dropConnections[zoneId]
-          .map(item => `<p>${item}</p>`)
-          .join('');
+        droppedItemsContainer.appendChild(droppedItemContainer);
 
-        droppedItem.remove();
+        // Atualiza dados para Streamlit
+        const itemData = {
+          id: droppedItemId,
+          text: clone.querySelector('span').innerText,
+          price: clone.querySelector('.preco-produto').innerText,
+          image: clone.querySelector('img').src
+        };
 
-        console.log("Drop connections:", dropConnections);
+        if (!dropConnections[zoneId]) dropConnections[zoneId] = [];
+        dropConnections[zoneId].push(itemData);
 
-        // Envia os dados formatados com tipo e conteúdo
-        const streamlitMsg = {
+        // Envia dados estruturados
+        sendValue({
           type: 'drop-event',
           data: dropConnections
-        };
-        sendValue(streamlitMsg);
+        });
       });
     });
-    // main.js
-    const droppable = document.createElement('div');
-    droppable.className = 'droppable-zone';
-    droppable.innerHTML = `
-      <div class="drop-instruction">
-        <span>⬇️ Arraste os produtos aqui</span>
-      </div>
-      <div class="dropped-items"></div>
-    `;
+
     window.rendered = true;
   }
 }
 
+// No final do arquivo você deve ter:
 Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
 Streamlit.setComponentReady();
 Streamlit.setFrameHeight(500);

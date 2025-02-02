@@ -12,25 +12,6 @@ st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 # Título e barra de busca
 st.title("🛒 PriceWise - Comparador de Preços", )
 
-# Dividindo a página em 3 colunas: link ficará na direita
-col1, col2, col3 = st.columns([1, 3, 1])
-st.header("")
-with col3:  # Adiciona o link na última coluna (direita)
-    st.markdown(
-        """
-        <div style="text-align: right;">
-            <a href="https://example.com" target="_blank" style="text-decoration: none;
-             color: white;
-              background-color: rgba(143, 151, 74, 0.15;
-               padding: 10px 15px;
-                border-radius: 5px;
-                ">🏠 Home
-            </a>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
 # Função para verificar se os dados estão atualizados
 def verificar_atualizacao():
     global data_envio

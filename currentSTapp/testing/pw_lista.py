@@ -4,13 +4,15 @@ import sqlite3
 from streamlit_image_select import image_select
 from st_aggrid import AgGrid, GridOptionsBuilder
 import unicodedata
-from st_drag_drop_my import st_drag_drop
+from st_drag_drop_my import st_drag_drop  # Seu componente customizado
+import re
 
-# Configuração responsiva
-st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="wide")
+# Configuração da interface
+st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
 
 
-# [Mantendo todas as funções do banco de dados anteriores...]
+# Funções do banco de dados (manter as existentes)
+# Conectar ao banco de dados
 def get_db():
     conn = sqlite3.connect("currentSTapp/produtos.db")
     # Registra a função remover_acentos no SQLite
@@ -156,174 +158,103 @@ def buscar_produtos(nome, mercado):
     conn.close()
     return produtos
 
-# Novo layout principal com melhorias
-def main():
-    st.title("🛒 PriceWise - Montador Inteligente de Listas")
+# Logos padrão
+logos = {
+    "Todos": "logos/todosmercados.png",
+    "Irmãos Gonçalves": "logos/ig2.png",
+    "Meta21": "logos/meta21.png",
+    "Nova Era": "logos/novaera300.png",
+    "Atacadão": "logos/atacadao1.png"
+}
 
-    # Estado da sessão melhorado
-    if 'lista_compras' not in st.session_state:
-        st.session_state.lista_compras = []
-
-    if 'melhor_mercado' not in st.session_state:
-        st.session_state.melhor_mercado = None
-
-    # Layout responsivo
-    col_pesquisa, col_lista = st.columns([3, 1], gap="large")
-
-    with col_pesquisa:
-        st.header("🔍 Pesquisa de Produtos")
-        selected_market, product_name = exibir_controles_pesquisa()
-
-        if product_name:
-            with st.spinner("Buscando produtos..."):
-                resultados = buscar_produtos(product_name, selected_market)
-                exibir_resultados_pesquisa(resultados, selected_market)
-
-    with col_lista:
-        st.header("📋 Zona de Lista (Arraste aqui)")
-        gerenciar_lista_compras()
-
-        if st.session_state.lista_compras:
-            st.divider()
-            if st.button("🔄 Calcular Melhor Mercado", use_container_width=True):
-                calcular_melhor_mercado()
+# Convert the dictionary to lists for image_select
+images = list(logos.values())
+captions = list(logos.keys())
 
 
-# Função melhorada para exibir resultados
-def exibir_resultados_pesquisa(resultados, mercado):
-    if not resultados:
-        st.warning("Nenhum produto encontrado")
-        return
+# Display the image selector
+selected_index = image_select(
+    label="Selecione um mercado:",
+    images=images,
+    use_container_width=False,
+    captions=captions,
+    index=0,  # Default selected image index
+    return_value="index",  # Return the index of the selected image
+)
 
-    items = {}
-    for prod in resultados:
-        key = f"{prod[3]}_{prod[2]}"
-        items[key] = {
-            "nome": prod[3],
-            "marca": prod[4] or "Não especificada",
-            "preco": f"R$ {prod[6]:.2f}",
-            "mercado": prod[2],
-            "imagem": prod[9]
+# Get the selected market name
+selected_market = captions[selected_index]
+
+# Display the selected market
+st.write(f"Você selecionou: **{selected_market}**")
+
+# Campo de busca de produtos abaixo do seletor de mercado
+st.write("### Pesquisar Produtos")
+search_query = st.text_input("Digite o nome do produto:", key="search_input")
+
+# Quando houver uma busca, mostrar os resultados
+if search_query.strip():
+    produtos = buscar_produtos(search_query, selected_market)
+
+    if produtos:
+        # Divide os resultados em principais e extras
+        draggable_items = {}
+        extra_items = {}
+
+        for idx, produto in enumerate(produtos):
+            # Cria o item com estrutura de dicionário
+            item = {
+                "text": produto[3],
+                "price": f"R${produto[6]:.2f}",
+                "image": produto[9]  # Verifique se o índice 9 realmente contém a URL da imagem
+            }
+
+            # Atribui aos dicionários corretos
+            if idx < 5:
+                draggable_items[f"prod_{produto[0]}"] = item
+            else:
+                extra_items[f"prod_{produto[0]}"] = item
+
+        # Zonas de drop (personalize conforme necessidade)
+        droppable_items = {
+            "dropZone": "Sua Lista:",
         }
 
-    # Componente com layout responsivo
-    lista_selecionada = st_drag_drop(
-        draggable_items=items,
-        droppable_items={"lista": ""},
-        extra_items={"mais_produtos": "Produtos Relacionados"}
-    )
-
-    # Atualização otimizada do estado
-    if lista_selecionada and 'lista' in lista_selecionada:
-        novos_itens = [item.split('_')[0] for item in lista_selecionada['lista']]
-        st.session_state.lista_compras = list(set(st.session_state.lista_compras + novos_itens))
-        st.experimental_rerun()
-
-
-# Função para exibir produtos
-def mostrar_produto(prod):
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        st.image(prod['imagem'], width=100)
-    with col2:
-        st.markdown(f"""
-        **{prod['nome']}**  
-        *{prod['marca']}*  
-        💵 {prod['preco']}  
-        🏪 {prod['mercado']}
-        """)
-    st.divider()
-
-
-# Função melhorada para controles de pesquisa
-def exibir_controles_pesquisa():
-    logos = {
-        "Todos": "logos/todosmercados.png",
-        "Irmãos Gonçalves": "logos/ig2.png",
-        "Meta21": "logos/meta21.png",
-        "Nova Era": "logos/novaera300.png"
-    }
-
-    # Layout responsivo para mobile
-    cols = st.columns(2)
-    with cols[0]:
-        selected_index = image_select(
-            label="Selecione um mercado:",
-            images=list(logos.values()),
-            captions=list(logos.keys()),
-            index=0,
-            return_value="index"
+        # Exibe o componente de drag-and-drop
+        drop_result = st_drag_drop(
+            draggable_items=draggable_items,
+            droppable_items=droppable_items,
+            extra_items=extra_items,
+            key=f"dragdrop_{search_query}"
         )
 
-    selected_market = list(logos.keys())[selected_index]
+        # Processa os itens soltos
+        # Processa os itens soltos
+        # Processa os itens soltos
+        if drop_result:
+            st.write("### Lista Final:")
+            for zona, itens in drop_result.get('data', {}).items():
+                zona_nome = droppable_items[zona.split('-')[1]]  # Corrige o nome da zona
+                with st.expander(zona_nome, expanded=True):
+                    total = 0.0  # Inicializa o total como um número decimal
+                    for item in itens:
+                        col1, col2 = st.columns([1, 4])
 
-    with cols[1]:
-        with st.form(key="search_form"):
-            product_name = st.text_input("Nome do produto:", placeholder="Ex: Leite Integral 1L")
-            if st.form_submit_button("🔍 Pesquisar", use_container_width=True):
-                return selected_market, product_name
+                        # Extrai o número do preço (removendo 'R$' e convertendo para float)
+                        preco_str = item['price']  # Exemplo: 'R$5.25'
+                        preco_numerico = float(
+                            preco_str.replace('R$', '').replace(',', '.').strip())  # Converte corretamente
 
-    return selected_market, None
+                        # Soma o valor ao total
+                        total += preco_numerico
 
-
-# Função para gerenciar lista
-def gerenciar_lista_compras():
-    if not st.session_state.lista_compras:
-        st.info("Arraste os produtos da área de pesquisa para esta zona")
-        return
-
-    # Interface touch-friendly para mobile
-    df = pd.DataFrame({
-        "Produto": st.session_state.lista_compras,
-        "Ações": ["❌"] * len(st.session_state.lista_compras)
-    })
-
-    gb = GridOptionsBuilder.from_dataframe(df)
-    gb.configure_selection('single', use_checkbox=False)
-    gb.configure_column("Ações", width=50)
-
-    grid = AgGrid(
-        df,
-        gridOptions=gb.build(),
-        fit_columns_on_grid_load=True,
-        height=400,
-        theme="streamlit"
-    )
-
-    if grid.selected_rows:
-        produto_remover = grid.selected_rows[0]['Produto']
-        st.session_state.lista_compras.remove(produto_remover)
-        st.experimental_rerun()
-
-
-# Função de cálculo otimizada
-def calcular_melhor_mercado():
-    # [Mantendo a função anterior com melhorias na exibição]
-
-    if st.session_state.melhor_mercado:
-        m = st.session_state.melhor_mercado
-        st.success(f"🎉 **Melhor Mercado:** {m['mercado']} | 💵 **Total:** R$ {m['total']:.2f}")
-
-        with st.expander("📝 Detalhes da Lista", expanded=True):
-            for produto in st.session_state.lista_compras:
-                resultado = buscar_produtos(produto, m['mercado'])
-                if resultado:
-                    prod = resultado[0]
-                    st.markdown(f"""
-                    **{prod[3]}**  
-                    - Marca: {prod[4] or 'Não especificada'}  
-                    - Preço: R$ {prod[6]:.2f}  
-                    - Link: [Ver produto]({prod[5]})
-                    """)
-                    st.divider()
-
-        st.download_button(
-            label="⬇️ Baixar Lista",
-            data="\n".join(st.session_state.lista_compras),
-            file_name="lista_compras.txt",
-            use_container_width=True
-        )
-
-
-if __name__ == "__main__":
-    main()
+                        with col1:
+                            st.image(item['image'], width=50)
+                        with col2:
+                            st.markdown(f"""
+                            **{item['text']}**  
+                            *Preço: {item['price']}*
+                            """)
+                    st.write(f"#### Total: R${total:.2f}")
+    else:
+        st.warning("Nenhum produto encontrado com este nome.")
