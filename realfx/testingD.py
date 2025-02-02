@@ -4,7 +4,7 @@ import json
 from st_aggrid import AgGrid, GridOptionsBuilder
 import pandas as pd
 import os
-from streamlit_image_select import image_select
+from streamlit_image_select_my import image_select
 
 # Initialize session state
 if 'product_name' not in st.session_state:

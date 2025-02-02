@@ -1,11 +1,8 @@
-import pandas as pd
 import streamlit as st
 import sqlite3
-from streamlit_image_select import image_select
-from st_aggrid import AgGrid, GridOptionsBuilder
+from streamlit_image_select_my import image_select
 import unicodedata
 from st_drag_drop_my import st_drag_drop  # Seu componente customizado
-import re
 
 # Configuração da interface
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")

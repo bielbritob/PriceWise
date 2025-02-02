@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 import pytz
 import unicodedata
-from streamlit_image_select import image_select
+from streamlit_image_select_my import image_select
 
 # Configuração da interface do Streamlit
 st.set_page_config(page_title="PriceWise", page_icon="🛒", layout="centered")
