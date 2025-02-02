@@ -1,5 +1,1 @@
-nodriver
-zendriver
-beautifulsoup4
-streamlit-aggrid
 streamlit-image-select
