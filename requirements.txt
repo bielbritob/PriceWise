@@ -1,1 +1,0 @@
-git+https://github.com/bielbritob/PriceWise.git#subdirectory=master/streamlit_image_select_my

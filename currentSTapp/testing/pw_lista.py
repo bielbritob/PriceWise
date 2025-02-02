@@ -1,6 +1,6 @@
 import streamlit as st
 import sqlite3
-from streamlit_image_select_my import image_select
+from currentSTapp.streamlit_image_select_my1 import image_select
 import unicodedata
 from st_drag_drop_my import st_drag_drop  # Seu componente customizado
 

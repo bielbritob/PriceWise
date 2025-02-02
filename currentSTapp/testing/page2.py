@@ -1,7 +1,7 @@
 import streamlit as st
 import sqlite3
 import unicodedata
-from streamlit_image_select_my import image_select
+from currentSTapp.streamlit_image_select_my1 import image_select
 import pandas as pd
 
 # Configuração da interface do Streamlit
