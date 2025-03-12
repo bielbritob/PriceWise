@@ -245,7 +245,7 @@ if submit_button:
                 produtos = buscar_produtos(product_name, selected_market)
                 if produtos:
                     if selected_market == 'Todos':
-                        st.subheader(f'Resultados para  "_**{product_name}**_ " em  todos mercados:')
+                        st.subheader(f'Resultados para  :gray-background["*_{product_name}_*"] em  todos mercados:')
                         for produto in produtos:
                             # Extrai os campos do produto
                             nome = produto[3]  # Nome do produto
